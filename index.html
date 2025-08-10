@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Zenarolla - Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#resume">Resume</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home">
+        <div class="container">
+            <h1>Welcome to Zenarolla.com</h1>
+            <p>Discover my professional journey, projects, and get in touch with me.</p>
+        </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section id="resume">
+        <div class="container">
+            <h2>Resume</h2>
+            <p>Here's a brief overview of my experience and skills:</p>
+            <ul>
+                <li><strong>Education:</strong> Bachelor's in Financial Management (Expected 2025)</li>
+                <li><strong>Experience:</strong> Sales, Financial Analysis, Business Development</li>
+                <li><strong>Skills:</strong> Financial Management, Digital Marketing, Leadership</li>
+                <li><strong>Certifications:</strong> NACS, Six Sigma, Leadership Development</li>
+            </ul>
+            <p><a href="resume.pdf" target="_blank">Download Full Resume</a></p>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <h2>Projects</h2>
+            <p>Check out some of the projects I've worked on:</p>
+            <ul>
+                <li>
+                    <h3>Business Career Plan</h3>
+                    <p>Building a 5-year career roadmap for taking over a family-owned convenience store chain.</p>
+                </li>
+                <li>
+                    <h3>Fashion Archive Website</h3>
+                    <p>Created an online presence to showcase rare Japanese archive fashion brands.</p>
+                </li>
+                <li>
+                    <h3>Vila Structural Website</h3>
+                    <p>Developed a professional website for a local crawl space and foundation services company.</p>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2>Contact</h2>
+            <p>Feel free to get in touch with me using the form below:</p>
+            <form action="submit_form.php" method="POST">
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Your Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Your Message:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Zenarolla. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
