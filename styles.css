@@ -38,19 +38,11 @@ body {
 h1 {
     font-size: 5rem;
     color: #00eaff;  /* Futuristic neon blue */
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     font-weight: 900;
     text-transform: none;  /* Keep name as entered */
     letter-spacing: 5px;   /* Wide spacing for a more futuristic effect */
     text-shadow: 0 0 10px rgba(0, 234, 255, 0.7), 0 0 20px rgba(0, 234, 255, 0.5);  /* Neon glow effect */
-}
-
-/* Description */
-p {
-    font-size: 1.6rem;
-    color: #bbb;         /* Softer light gray for the description */
-    margin-bottom: 40px;
-    letter-spacing: 1px;
 }
 
 /* Button Container */
@@ -81,10 +73,6 @@ p {
 @media screen and (max-width: 768px) {
     h1 {
         font-size: 3rem;  /* Adjust title size for smaller screens */
-    }
-
-    p {
-        font-size: 1.2rem;
     }
 
     .buttons {
