@@ -46,10 +46,10 @@ h1 {
   letter-spacing:8px;
   opacity:0;
   transform:translateY(16px);
-  transition: opacity 500ms ease, transform 500ms ease; /* no letter-spacing transition */
+  transition: letter-spacing 200ms ease, opacity 500ms ease, transform 500ms ease;
 }
 h1:hover {
-  letter-spacing:10px; /* instant change */
+  letter-spacing:9px; /* subtle change */
 }
 
 /* ===== Buttons ===== */
@@ -93,7 +93,7 @@ h1:hover {
   left: 50%;
   transform: translateX(-50%) scaleX(0);
   height: 2px;
-  width: 70%; /* proportional underline length */
+  width: 70%;
   background: currentColor;
   transform-origin: center;
   transition: transform 250ms ease;
@@ -122,15 +122,20 @@ h1:hover {
 
 /* ===== Mobile adjustments ===== */
 @media (max-width: 768px) {
-  /* Keep fade-in but remove parallax/zoom on mobile */
+  /* No scroll on homepage */
+  html, body {
+    overflow: hidden;
+    height: 100%;
+  }
   #home {
-    transform: none !important; /* no zoom */
-    transition: opacity 500ms ease, transform 500ms ease !important;
+    height: 100vh;
+    transform: none; /* no zoom */
+    transition: opacity 500ms ease, transform 500ms ease;
   }
   #home h1,
   #home .buttons {
-    transform: translateY(0) !important; /* no parallax shift */
-    transition: opacity 500ms ease, transform 500ms ease !important;
+    transform: translateY(0); /* no parallax shift */
+    transition: opacity 500ms ease, transform 500ms ease;
   }
 
   /* Adjust title for smaller screens */
@@ -140,7 +145,7 @@ h1:hover {
     margin-bottom: 25px;
   }
   h1:hover {
-    letter-spacing: 5px; /* subtle hover change on mobile */
+    letter-spacing: 5px; /* subtle change */
   }
 
   /* Stack buttons vertically for easier tapping */
@@ -168,13 +173,4 @@ h1:hover {
   body { animation:none; }
   h1, .buttons { transition:none; opacity:1; transform:none; }
   .btn, .btn::after { transition:none; }
-}
-@media (max-width: 768px) {
-  html, body {
-    overflow: hidden; /* Prevent scrolling */
-    height: 100%;      /* Fill screen */
-  }
-  #home {
-    height: 100vh;     /* Exactly full screen height */
-  }
 }
