@@ -46,11 +46,10 @@ h1 {
   letter-spacing:8px;
   opacity:0;
   transform:translateY(16px);
-  transition: letter-spacing 150ms ease-out, opacity 500ms ease, transform 500ms ease;
+  transition: opacity 500ms ease, transform 500ms ease; /* removed letter-spacing transition */
 }
 h1:hover {
-  letter-spacing:10px; /* slight expansion */
-  transition: letter-spacing 400ms ease-in;
+  letter-spacing:10px; /* instant change */
 }
 
 /* ===== Buttons ===== */
