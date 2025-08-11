@@ -1,19 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Francisco Zenarolla</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Swap to another geometric font if you want; Inter keeps it crisp -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Francisco Zenarolla</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f9f7f3;
+    --ink:#2b2b2b;              /* softer than pure black = luxe */
+    --btn:#2f2f2f;
+    --btn-ink:#ffffff;
+    --ring:rgba(0,0,0,.08);
+
+    /* Compact, consistent rhythm */
+    --s1: clamp(8px, 1.1vh, 12px);
+    --s2: clamp(12px, 1.6vh, 16px);
+    --s3: clamp(18px, 2.2vh, 22px);
+    --s4: clamp(22px, 3vh, 30px);
+    --s5: clamp(28px, 4.2vh, 44px);
+
+    --btn-h: clamp(40px, 6vh, 48px);
+    --btn-radius: 0;            /* rectangular */
+    --btn-track: 0.18em;        /* spaced letters on buttons */
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Center the hero perfectly with safe-area padding */
+  .wrap{
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    padding: max(var(--s3), env(safe-area-inset-top))
+             var(--s3)
+             max(var(--s3), env(safe-area-inset-bottom));
+  }
+
+  .hero{
+    width: min(90vw, 640px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s3);
+  }
+
+  .name{
+    margin:0;
+    text-align:center;
+    font-weight:300;
+    font-size: clamp(30px, 3.6vw, 56px);
+    line-height: 1.06;
+    letter-spacing: 0.15em;    /* subtle; avoids “spread out” look */
+    white-space: nowrap;        /* one line on desktop */
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .buttons{
+    display:flex;
+    flex-direction:column;
+    gap: calc(var(--s2) - 2px); /* tight vertical cadence */
+    align-items: center
+  }
+
+  .btn{
+    display:block;
+    width:80%;
+    height: var(--btn-h);
+    line-height: var(--btn-h);
+    text-align:center;
+    text-decoration:none;
+    color: var(--btn-ink);
+    background: var(--btn);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: var(--btn-radius);
+    letter-spacing: var(--btn-track);
+    font-weight:500;
+    box-shadow: 0 1px 0 var(--ring), 0 8px 24px rgba(0,0,0,.04);
+    transition: transform .08s ease, filter .12s ease, box-shadow .12s ease;
+    will-change: transform;
+  }
+  .btn:hover { transform: translateY(-1px); filter: brightness(1.04); }
+  .btn:active{ transform: translateY(0);    filter: brightness(.98); }
+
+  /* Desktop: slightly narrower card + stable type size */
+  @media (min-width: 1000px){
+    .hero{ width: min(60vw, 620px); }
+    .name{ font-size: clamp(32px, 3.2vw, 54px); }
+  }
+
+  /* Mobile: allow wrap, no scrolling for a “card” feel */
+  @media (max-width: 700px){
+    html, body { overflow: hidden; }
+    .hero{ width: min(92vw, 520px); gap: var(--s2); }
+    .name{ white-space: normal; font-size: clamp(26px, 7vw, 42px); }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    .btn{ transition: none; }
+  }
+</style>
 </head>
 <body>
   <main class="wrap">
-    <section class="hero stack">
-      <h1 class="name">Francisco<br>Zenarolla</h1>
-      <nav class="stack buttons">
+    <section class="hero">
+      <h1 class="name">Francisco Zenarolla</h1>
+      <nav class="buttons">
         <a class="btn" href="/resume">RESUME</a>
         <a class="btn" href="/projects">PROJECTS</a>
         <a class="btn" href="/contact">CONTACT</a>
