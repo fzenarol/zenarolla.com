@@ -5,15 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Francisco Zenarolla</title>
   <meta name="description" content="Francisco Zenarolla — resume, projects, and contact." />
-
   <style>
     /* ===== Reset ===== */
     *, *::before, *::after { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
-
-    /* ===== Background shift ===== */
-    :root { --bg1:#f9f7f3; --bg2:#f4f1eb; --ink:#333; }
     html { scroll-behavior: smooth; }
+
+    /* ===== Theme / Colors ===== */
+    :root { --bg1:#f9f7f3; --bg2:#f4f1eb; --ink:#333; }
+
+    /* ===== Background (subtle animated gradient) ===== */
     body{
       font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
       background: linear-gradient(120deg,var(--bg1),var(--bg2),var(--bg1));
@@ -32,9 +33,9 @@
       100%{background-position:0% 50%}
     }
 
-    /* ===== Layout ===== */
-    header { position: relative; width: 100%; }
-    nav[aria-label="Primary"] { display: none; } /* reserved if you add a top nav later */
+    /* ===== Structure ===== */
+    header { width: 100%; }
+    nav[aria-label="Primary"] { display: none; } /* reserved for future */
 
     main { width: 100%; }
     .hero{
@@ -48,22 +49,22 @@
     h1{
       font-size: clamp(2.2rem, 5.5vw, 4rem);
       font-weight: 300;
-      letter-spacing: 6px;        /* tightened a bit */
+      letter-spacing: 6px;        /* refined */
       margin: 0 0 32px 0;
       opacity: 0; transform: translateY(16px);
       transition: letter-spacing 200ms ease, opacity 500ms ease, transform 500ms ease;
     }
-    .loaded h1{ opacity:1; transform: translateY(0); transition-delay: 80ms; }
+    body.loaded h1{ opacity:1; transform: translateY(0); transition-delay: 80ms; }
     h1:hover{ letter-spacing: 7px; } /* subtle polish */
 
     /* ===== Button group ===== */
     .buttons{
-      display:flex; flex-direction:column; gap:14px; /* stacks by default (better for mobile) */
+      display:flex; flex-direction:column; gap:14px; /* mobile-first vertical */
       align-items:center; justify-content:center;
       opacity:0; transform: translateY(16px);
       transition: opacity 500ms ease, transform 500ms ease;
     }
-    .loaded .buttons{ opacity:1; transform: translateY(0); transition-delay: 180ms; }
+    body.loaded .buttons{ opacity:1; transform: translateY(0); transition-delay: 180ms; }
 
     .btn{
       position:relative; display:inline-block;
@@ -73,13 +74,14 @@
       border-radius: 6px;
       transition: background-color 200ms ease, box-shadow 240ms ease, transform 200ms ease, letter-spacing 200ms ease;
       box-shadow: 0 1px 0 rgba(0,0,0,.15), 0 0 0 1px rgba(255,255,255,.03) inset;
+      will-change: transform, box-shadow;
     }
     .btn:hover, .btn:focus-visible{
       background:#3a3a3a; letter-spacing: 4.2px; transform: translateY(-2px);
       box-shadow: 0 10px 30px rgba(0,0,0,.18);
       outline: none;
     }
-    /* Underline: centered & proportional (works on mobile) */
+    /* Underline: centered & proportional */
     .btn::after{
       content:""; position:absolute; left:50%; bottom:8px; height:2px;
       width: 70%; transform: translateX(-50%) scaleX(0); transform-origin:center;
@@ -87,21 +89,16 @@
     }
     .btn:hover::after, .btn:focus-visible::after{ transform: translateX(-50%) scaleX(1); }
 
-    /* Attention glow after delay (auto, not hover) */
+    /* ===== Attention glow (soft light + scale pulse) ===== */
     @keyframes glowPulse {
-      0%   { box-shadow: 0 0 0 rgba(0,0,0,0); }
-      40%  { box-shadow: 0 14px 36px rgba(0,0,0,.24); }
-      100% { box-shadow: 0 0 0 rgba(0,0,0,0); }
+      0%   { box-shadow: 0 0 0 rgba(255,255,255,0); transform: scale(1); }
+      40%  { box-shadow: 0 0 22px rgba(255,255,255,0.6); transform: scale(1.03); }
+      60%  { box-shadow: 0 0 22px rgba(255,255,255,0.6); transform: scale(1.03); }
+      100% { box-shadow: 0 0 0 rgba(255,255,255,0); transform: scale(1); }
     }
-    .auto-glow { animation: glowPulse 1.6s ease-in-out 2; } /* plays twice then stops */
+    .auto-glow { animation: glowPulse 1.5s ease-in-out 2; }
 
-    /* Desktop: place buttons horizontally */
-    @media (min-width: 769px){
-      .buttons{ flex-direction: row; gap: 24px; }
-      .btn{ font-size:1.1rem; }
-    }
-
-    /* ===== Sections (simple placeholders so links don’t 404) ===== */
+    /* ===== Sections (placeholders so links work; replace with content) ===== */
     section.anchor { padding: 80px 20px 120px; background: transparent; }
     section.anchor h2{
       font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
@@ -109,16 +106,20 @@
     }
     section.anchor p{ margin: 0 auto; max-width: 720px; line-height: 1.6; }
 
-    /* ===== Mobile — lock hero scroll initially, keep animations smooth ===== */
-    @media (max-width: 768px){
-      /* underline shorter & closer */
-      .btn::after{ width: 60%; bottom: 6px; }
-
-      /* If hero is locked, make sure content still centers nicely */
-      .hero{ min-height: 100svh; }
+    /* ===== Desktop tweaks ===== */
+    @media (min-width: 769px){
+      .buttons{ flex-direction: row; gap: 24px; }
+      .btn{ font-size:1.1rem; }
     }
 
-    /* Reduced motion */
+    /* ===== Mobile tweaks ===== */
+    @media (max-width: 768px){
+      .hero{ min-height: 100svh; }          /* safe viewport on mobile */
+      .btn::after{ width:60%; bottom:6px; } /* tighter underline */
+      /* Title size/spacing already scales via clamp() */
+    }
+
+    /* ===== Reduced motion ===== */
     @media (prefers-reduced-motion: reduce){
       body{ animation: none; }
       .hero{ transition: none; }
@@ -146,7 +147,7 @@
       </div>
     </section>
 
-    <!-- PLACEHOLDER SECTIONS (so links work now; replace with content when ready) -->
+    <!-- SECTIONS (replace with real content when ready) -->
     <section id="resume" class="anchor" aria-labelledby="resume-h2">
       <h2 id="resume-h2">Resume</h2>
       <p>Add a PDF link or embedded resume here when ready.</p>
@@ -164,19 +165,51 @@
   </main>
 
   <script>
-    // Helper: device checks
+    // Helpers
     const isDesktop = () => window.innerWidth > 768;
 
     // Fade-in on load
     document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('home')?.classList.add('loaded');
+      document.body.classList.add('loaded');
 
-      // Attention glow after 3s (works on mobile because it's JS-applied)
-      setTimeout(() => {
-        document.querySelectorAll('.btn').forEach(btn => btn.classList.add('auto-glow'));
-      }, 3000);
+      // --- Attention glow: sequential, loops every 15s, stops on first interaction ---
+      let glowInterval;
 
-      // Desktop-only parallax + hero zoom
+      function runGlowSequence() {
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach((btn, i) => {
+          setTimeout(() => {
+            btn.classList.add('auto-glow');
+            // remove so it can be retriggered in the next loop
+            setTimeout(() => btn.classList.remove('auto-glow'), 3000);
+          }, i * 2500); // each button starts 2.5s after previous
+        });
+      }
+
+      function startGlowLoop(immediate=false) {
+        if (immediate) {
+          runGlowSequence();                 // mobile: start right away
+        } else {
+          setTimeout(runGlowSequence, 3000); // desktop: start after 3s
+        }
+        glowInterval = setInterval(runGlowSequence, 15000); // repeat every 15s
+      }
+
+      function stopGlowLoop() {
+        clearInterval(glowInterval);
+      }
+
+      // Start glow now on mobile, delayed on desktop
+      if (isDesktop()) startGlowLoop(false);
+      else startGlowLoop(true);
+
+      // Stop glow once the user interacts with any button
+      document.querySelectorAll('.btn').forEach(btn => {
+        btn.addEventListener('click', stopGlowLoop, { once: true });
+        btn.addEventListener('touchstart', stopGlowLoop, { once: true });
+      });
+
+      // --- Desktop-only parallax + hero zoom ---
       if (isDesktop()) {
         window.addEventListener('scroll', () => {
           const y = window.scrollY || 0;
@@ -186,13 +219,13 @@
           if (title)   title.style.transform   = `translateY(${y * 0.15}px)`;
           if (buttons) buttons.style.transform = `translateY(${y * 0.25}px)`;
           if (hero) {
-            const scale = 1 + y * 0.001;      // stronger but tasteful
+            const scale = 1 + y * 0.001;
             hero.style.transform = `scale(${scale})`;
             hero.style.transformOrigin = 'center top';
           }
         }, { passive: true });
       } else {
-        // Mobile: lock scroll on hero until user picks a section
+        // --- Mobile: lock scroll on hero until a button is tapped, then unlock ---
         const lockScroll = () => {
           document.documentElement.style.overflow = 'hidden';
           document.body.style.overflow = 'hidden';
@@ -202,26 +235,18 @@
           document.body.style.overflow = '';
         };
         lockScroll();
-
-        // When a nav button is tapped, unlock and let it scroll to the section
         document.querySelectorAll('.btn[href^="#"]').forEach(a => {
           a.addEventListener('click', () => {
-            // allow the default smooth scroll to happen now
-            unlockScroll();
+            unlockScroll(); // allow smooth scroll to section
           }, { passive: true });
         });
       }
-    });
 
-    // If window is resized across breakpoint, a reload keeps behavior consistent
-    window.addEventListener('resize', () => {
-      // optional: debounce a bit
-      clearTimeout(window.__rz);
-      window.__rz = setTimeout(() => {
-        // No-op if only a small change; hard refresh ensures correct mode
-        // Comment out if you don't want this behavior.
-        // location.reload();
-      }, 250);
+      // Optional: reload if crossing breakpoint to keep behavior consistent
+      // window.addEventListener('resize', () => {
+      //   clearTimeout(window.__rz);
+      //   window.__rz = setTimeout(() => location.reload(), 250);
+      // });
     });
   </script>
 </body>
