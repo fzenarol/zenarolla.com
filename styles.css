@@ -7,9 +7,9 @@
 
 /* Body Styling */
 body {
-    font-family: 'Roboto', sans-serif;  /* Clean and modern font */
-    background-color: #111;            /* Dark background for a more futuristic vibe */
-    color: #e0e0e0;                    /* Light text for contrast */
+    font-family: 'Helvetica', sans-serif;  /* Clean and refined font */
+    background-color: #000;               /* Black background for sleek, professional look */
+    color: #fff;                          /* White text for high contrast */
     line-height: 1.6;
     height: 100vh;
     display: flex;
@@ -30,19 +30,18 @@ body {
 }
 
 .container {
-    max-width: 900px;  /* Adjust the width for better desktop layout */
+    max-width: 800px;  /* Refined container width */
     width: 100%;
 }
 
 /* Title Styling */
 h1 {
-    font-size: 4rem;   /* Adjusted for desktop */
-    color: #00eaff;  /* Futuristic neon blue */
+    font-size: 4rem;  /* Sleek, professional size */
+    color: #fff;  /* White color */
     margin-bottom: 40px;
-    font-weight: 900;
+    font-weight: 300;  /* Light font weight for elegance */
     text-transform: none;  /* Keep name as entered */
-    letter-spacing: 5px;   /* Wide spacing for a more futuristic effect */
-    text-shadow: 0 0 10px rgba(0, 234, 255, 0.7), 0 0 20px rgba(0, 234, 255, 0.5);  /* Neon glow effect */
+    letter-spacing: 2px;   /* Slight letter-spacing for refinement */
 }
 
 /* Button Container */
@@ -53,26 +52,26 @@ h1 {
 }
 
 .btn {
-    padding: 15px 30px;
-    background-color: #00eaff;  /* Neon blue for buttons */
-    color: #111;                /* Dark text color for contrast */
+    padding: 12px 25px;
+    background-color: #333;  /* Dark gray for buttons */
+    color: #fff;             /* White text for contrast */
     text-decoration: none;
     font-size: 1.2rem;
-    font-weight: bold;
-    border-radius: 50px;        /* Rounded button edges for a sleek look */
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    letter-spacing: 2px;        /* Spacing for a more refined look */
+    font-weight: normal;     /* Normal weight for a more understated look */
+    border-radius: 25px;     /* Smooth rounded edges */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    letter-spacing: 1px;     /* Slight spacing for a refined look */
 }
 
 .btn:hover {
-    background-color: #008fa3;   /* Slightly darker blue on hover */
-    transform: scale(1.1);        /* Button scaling effect */
+    background-color: #555;  /* Slightly lighter gray on hover */
+    transform: translateY(-3px); /* Subtle hover effect */
 }
 
 /* Responsive Design */
 @media screen and (max-width: 768px) {
     h1 {
-        font-size: 3rem;  /* Adjust title size for smaller screens */
+        font-size: 2.5rem;  /* Adjust title size for smaller screens */
     }
 
     .buttons {
