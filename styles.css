@@ -7,9 +7,9 @@
 
 /* Body Styling */
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f5f5f5;   /* Light background */
-    color: #333;                 /* Dark text */
+    font-family: 'Roboto', sans-serif;  /* Clean and modern font */
+    background-color: #111;            /* Dark background for a more futuristic vibe */
+    color: #e0e0e0;                    /* Light text for contrast */
     line-height: 1.6;
     height: 100vh;
     display: flex;
@@ -26,28 +26,34 @@ body {
     justify-content: center;
     align-items: center;
     height: 100%;
+    padding: 20px;
 }
 
 .container {
     max-width: 1200px;
     width: 100%;
-    padding: 20px;
 }
 
+/* Title Styling */
 h1 {
-    font-size: 4rem;
-    color: #222;
+    font-size: 5rem;
+    color: #00eaff;  /* Futuristic neon blue */
     margin-bottom: 20px;
-    font-weight: 700;
-    text-transform: uppercase;  /* Ensures the title is in all caps */
+    font-weight: 900;
+    text-transform: none;  /* Keep name as entered */
+    letter-spacing: 5px;   /* Wide spacing for a more futuristic effect */
+    text-shadow: 0 0 10px rgba(0, 234, 255, 0.7), 0 0 20px rgba(0, 234, 255, 0.5);  /* Neon glow effect */
 }
 
+/* Description */
 p {
-    font-size: 1.5rem;
-    color: #555;
+    font-size: 1.6rem;
+    color: #bbb;         /* Softer light gray for the description */
     margin-bottom: 40px;
+    letter-spacing: 1px;
 }
 
+/* Button Container */
 .buttons {
     display: flex;
     justify-content: center;
@@ -56,24 +62,25 @@ p {
 
 .btn {
     padding: 15px 30px;
-    background-color: #333;
-    color: white;
+    background-color: #00eaff;  /* Neon blue for buttons */
+    color: #111;                /* Dark text color for contrast */
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: bold;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    border-radius: 50px;        /* Rounded button edges for a sleek look */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    letter-spacing: 2px;        /* Spacing for a more refined look */
 }
 
 .btn:hover {
-    background-color: #e1e1e1;
-    color: #333;
+    background-color: #008fa3;   /* Slightly darker blue on hover */
+    transform: scale(1.1);        /* Button scaling effect */
 }
 
 /* Responsive Design */
 @media screen and (max-width: 768px) {
     h1 {
-        font-size: 2.5rem;
+        font-size: 3rem;  /* Adjust title size for smaller screens */
     }
 
     p {
