@@ -169,3 +169,12 @@ h1:hover {
   h1, .buttons { transition:none; opacity:1; transform:none; }
   .btn, .btn::after { transition:none; }
 }
+@media (max-width: 768px) {
+  html, body {
+    overflow: hidden; /* Prevent scrolling */
+    height: 100%;      /* Fill screen */
+  }
+  #home {
+    height: 100vh;     /* Exactly full screen height */
+  }
+}
