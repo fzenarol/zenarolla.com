@@ -30,13 +30,13 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 900px;  /* Adjust the width for better desktop layout */
     width: 100%;
 }
 
 /* Title Styling */
 h1 {
-    font-size: 5rem;
+    font-size: 4rem;   /* Adjusted for desktop */
     color: #00eaff;  /* Futuristic neon blue */
     margin-bottom: 40px;
     font-weight: 900;
