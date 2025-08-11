@@ -41,7 +41,7 @@ h1 {
     margin-bottom: 40px;
     font-weight: 300;  /* Light font weight for elegance */
     text-transform: none;  /* Keep name as entered */
-    letter-spacing: 2px;   /* Slight letter-spacing for refinement */
+    letter-spacing: 5px;   /* Increased letter-spacing for a crisper effect */
 }
 
 /* Button Container */
@@ -52,15 +52,16 @@ h1 {
 }
 
 .btn {
-    padding: 12px 25px;
+    padding: 12px 30px;  /* More padding for a sharper look */
     background-color: #333;  /* Dark gray for buttons */
     color: #fff;             /* White text for contrast */
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: normal;     /* Normal weight for a more understated look */
-    border-radius: 25px;     /* Smooth rounded edges */
+    border-radius: 5px;      /* Slight rounded corners for a modern feel */
     transition: background-color 0.3s ease, transform 0.3s ease;
-    letter-spacing: 1px;     /* Slight spacing for a refined look */
+    letter-spacing: 3px;     /* Increased letter-spacing for crisper text */
+    text-transform: uppercase; /* Make button text uppercase for added impact */
 }
 
 .btn:hover {
