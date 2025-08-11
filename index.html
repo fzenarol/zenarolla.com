@@ -3,12 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Francisco Zenarolla - Portfolio</title>
-    <link rel="stylesheet" href="styles.css?v=2">
+    <link rel="stylesheet" href="styles.css?v=4">
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('home')?.classList.add('loaded');
+      });
+      window.addEventListener('scroll', () => {
+        const y = window.scrollY || 0;
+        const title = document.querySelector('#home h1');
+        const buttons = document.querySelector('#home .buttons');
+        if (title) title.style.transform = `translateY(${y * 0.05}px)`;
+        if (buttons) buttons.style.transform = `translateY(${y * 0.08}px)`;
+      }, { passive: true });
+    </script>
 </head>
 <body>
-    <!-- Homepage Section -->
     <section id="home">
         <div class="container">
             <h1>Francisco Zenarolla</h1>
@@ -19,34 +29,5 @@
             </div>
         </div>
     </section>
-
-    <!-- Animation + Parallax Script -->
-    <script>
-      // Trigger the reveal animation
-      document.addEventListener('DOMContentLoaded', () => {
-        const home = document.getElementById('home');
-        if (home) home.classList.add('loaded');
-      });
-
-      // Gentle parallax effect on scroll
-      (function(){
-        const title = document.querySelector('#home h1');
-        const buttons = document.querySelector('#home .buttons');
-        if(!title || !buttons) return;
-        let ticking = false;
-        function onScroll(){
-          if(!ticking){
-            requestAnimationFrame(() => {
-              const y = window.scrollY || 0;
-              title.style.transform = `translateY(${y * 0.05}px)`;
-              buttons.style.transform = `translateY(${y * 0.08}px)`;
-              ticking = false;
-            });
-            ticking = true;
-          }
-        }
-        window.addEventListener('scroll', onScroll, { passive: true });
-      })();
-    </script>
 </body>
 </html>
