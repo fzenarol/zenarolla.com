@@ -93,3 +93,24 @@ body{
 /* Tighter hero block: bring buttons closer to the name */
 .hero.stack { gap: var(--space-3); }        /* was var(--space-4) */
 .buttons { gap: calc(var(--space-2) - 2px); } /* subtle tighten */
+/* --- Name behavior: one line on desktop, stacked on mobile --- */
+.name br { display: none; }          /* hide forced break on desktop */
+.name { white-space: nowrap; }       /* keep name on a single line */
+
+@media (max-width:700px){
+  .name br { display: inline; }      /* allow the break on mobile */
+  .name { white-space: normal; }     /* allow wrapping on mobile */
+}
+
+/* --- Desktop spacing + width tuning --- */
+@media (min-width:1000px){
+  .hero{ width: min(70vw, 640px); }  /* slightly narrower card */
+  .stack{ gap: var(--space-4); }     /* reduce vertical gaps a touch */
+  .buttons{ gap: var(--space-2); }
+  .name{ font-size: clamp(28px, 3.6vw, 54px); line-height:1.06; }
+}
+
+/* Optional: slightly firmer button height on desktop */
+@media (min-width:1000px){
+  .btn{ height: 48px; line-height: 48px; }
+}
