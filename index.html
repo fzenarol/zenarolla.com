@@ -1,195 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Francisco Zenarolla</title>
-
-  <!-- Type -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <meta name="description" content="Francisco Zenarolla — resume, projects, and contact." />
 
   <style>
-    /* ===== Theme & Scale ===== */
-    :root{
-      --bg: #f9f7f3;
-      --ink: #2b2b2b;
-      --btn: #1f1f1f;
-      --btn-ink: #ffffff;
-      --ring: rgba(0,0,0,.12);
+    /* ===== Reset ===== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
 
-      --s-1: clamp(8px, 1.1vh, 12px);
-      --s-2: clamp(12px, 1.6vh, 16px);
-      --s-3: clamp(16px, 2.1vh, 22px);
-      --s-4: clamp(22px, 3vh, 30px);
-      --s-5: clamp(28px, 4.2vh, 44px);
-
-      --btn-h: clamp(36px, 5.2vh, 44px);
-      --btn-radius: 0;
-      --btn-track: 0.14em;
-      --btn-width: 78%;
-      --btn-width-mobile: 86%;
-
-      --max-card: 640px;
-      --max-card-wide: 620px;
-    }
-
-    /* ===== Base ===== */
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
+    /* ===== Background shift ===== */
+    :root { --bg1:#f9f7f3; --bg2:#f4f1eb; --ink:#333; }
+    html { scroll-behavior: smooth; }
     body{
-      margin: 0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: var(--ink);
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-
-      /* Idle background gradient shift */
-      background: linear-gradient(120deg, #f9f7f3, #f4f2ee, #f9f7f3);
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
+      background: linear-gradient(120deg,var(--bg1),var(--bg2),var(--bg1));
       background-size: 400% 400%;
-      animation: bgShift 30s ease-in-out infinite;
-    }
-
-    .wrap{
-      min-height: 100dvh;
-      display: grid;
-      place-items: center;
-      padding: max(var(--s-3), env(safe-area-inset-top))
-               var(--s-3)
-               max(var(--s-3), env(safe-area-inset-bottom));
-    }
-
-    .hero{
-      width: min(90vw, var(--max-card));
+      animation: bgShift 20s ease-in-out infinite;
+      color: var(--ink);
+      min-height: 100vh;
       display: flex;
-      flex-direction: column;
-      gap: var(--s-3);
-      animation: breathe 6s ease-in-out infinite; /* gentle breathing */
-    }
-
-    /* Title: single line on desktop, no truncation */
-    .name{
-      margin: 0;
-      text-align: center;
-      font-weight: 300;
-      font-size: clamp(30px, 3.4vw, 56px);
-      line-height: 1.06;
-      letter-spacing: 0.08em; /* increased spacing */
-      white-space: nowrap;     /* keep one line on desktop */
-      overflow: visible;       /* no ellipsis */
-      text-overflow: clip;
-    }
-
-    .buttons{
-      display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: calc(var(--s-2) - 2px);
+      justify-content: center;
+      text-align: center;
     }
+    @keyframes bgShift{
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+
+    /* ===== Layout ===== */
+    header { position: relative; width: 100%; }
+    nav[aria-label="Primary"] { display: none; } /* reserved if you add a top nav later */
+
+    main { width: 100%; }
+    .hero{
+      display:flex; align-items:center; justify-content:center; flex-direction:column;
+      width:100%; padding:20px; min-height:100vh;
+      transition: transform 0.1s ease-out; will-change: transform;
+    }
+    .container{ width: min(800px, 92vw); margin-inline:auto; }
+
+    /* ===== Title ===== */
+    h1{
+      font-size: clamp(2.2rem, 5.5vw, 4rem);
+      font-weight: 300;
+      letter-spacing: 6px;        /* tightened a bit */
+      margin: 0 0 32px 0;
+      opacity: 0; transform: translateY(16px);
+      transition: letter-spacing 200ms ease, opacity 500ms ease, transform 500ms ease;
+    }
+    .loaded h1{ opacity:1; transform: translateY(0); transition-delay: 80ms; }
+    h1:hover{ letter-spacing: 7px; } /* subtle polish */
+
+    /* ===== Button group ===== */
+    .buttons{
+      display:flex; flex-direction:column; gap:14px; /* stacks by default (better for mobile) */
+      align-items:center; justify-content:center;
+      opacity:0; transform: translateY(16px);
+      transition: opacity 500ms ease, transform 500ms ease;
+    }
+    .loaded .buttons{ opacity:1; transform: translateY(0); transition-delay: 180ms; }
 
     .btn{
-      display: block;
-      width: var(--btn-width);
-      margin: 0 auto;
-      height: var(--btn-h);
-      line-height: var(--btn-h);
-      text-align: center;
-      text-decoration: none;
-      color: var(--btn-ink);
-      background: var(--btn);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: var(--btn-radius);
-      letter-spacing: var(--btn-track);
-      font-weight: 500;
-      box-shadow: 0 1px 0 var(--ring), 0 8px 24px rgba(0,0,0,.04);
-      transition: transform .08s ease, filter .12s ease, box-shadow .12s ease;
-      will-change: transform;
+      position:relative; display:inline-block;
+      padding: 12px 32px;
+      background:#232323; color:#fff; text-decoration:none;
+      font-size: 1.05rem; text-transform: uppercase; letter-spacing: 3.5px;
+      border-radius: 6px;
+      transition: background-color 200ms ease, box-shadow 240ms ease, transform 200ms ease, letter-spacing 200ms ease;
+      box-shadow: 0 1px 0 rgba(0,0,0,.15), 0 0 0 1px rgba(255,255,255,.03) inset;
     }
-    .btn:hover{ transform: translateY(-1px); filter: brightness(1.04); }
-    .btn:active{ transform: translateY(0);    filter: brightness(.98); }
-    .btn:focus-visible{ outline: 2px solid #000; outline-offset: 2px; }
+    .btn:hover, .btn:focus-visible{
+      background:#3a3a3a; letter-spacing: 4.2px; transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.18);
+      outline: none;
+    }
+    /* Underline: centered & proportional (works on mobile) */
+    .btn::after{
+      content:""; position:absolute; left:50%; bottom:8px; height:2px;
+      width: 70%; transform: translateX(-50%) scaleX(0); transform-origin:center;
+      background: currentColor; opacity:.8; transition: transform 250ms ease; pointer-events:none;
+    }
+    .btn:hover::after, .btn:focus-visible::after{ transform: translateX(-50%) scaleX(1); }
 
-    /* ===== Animations ===== */
-    @keyframes bgShift {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    /* Attention glow after delay (auto, not hover) */
+    @keyframes glowPulse {
+      0%   { box-shadow: 0 0 0 rgba(0,0,0,0); }
+      40%  { box-shadow: 0 14px 36px rgba(0,0,0,.24); }
+      100% { box-shadow: 0 0 0 rgba(0,0,0,0); }
     }
-    @keyframes breathe {
-      0%, 100% { transform: translateY(0); }
-      50%      { transform: translateY(-4px); }
-    }
-    .btn.idle-glow { animation: glow 2.8s ease-in-out infinite; }
-    @keyframes glow {
-      0%, 100% { box-shadow: 0 1px 0 var(--ring), 0 8px 24px rgba(0,0,0,.04); }
-      50%      { box-shadow: 0 1px 0 var(--ring), 0 8px 24px rgba(0,0,0,.1), 0 0 12px rgba(255,255,255,0.25); }
+    .auto-glow { animation: glowPulse 1.6s ease-in-out 2; } /* plays twice then stops */
+
+    /* Desktop: place buttons horizontally */
+    @media (min-width: 769px){
+      .buttons{ flex-direction: row; gap: 24px; }
+      .btn{ font-size:1.1rem; }
     }
 
-    /* ===== Desktop refinements: wider card & bigger title so it fits one line */
-    @media (min-width: 1000px){
-      .hero{ width: min(78vw, 900px); }
-      .name{ font-size: clamp(34px, 3.6vw, 64px); }
+    /* ===== Sections (simple placeholders so links don’t 404) ===== */
+    section.anchor { padding: 80px 20px 120px; background: transparent; }
+    section.anchor h2{
+      font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      font-size: clamp(1rem, 2.2vw, 1.2rem); margin: 0 0 14px;
+    }
+    section.anchor p{ margin: 0 auto; max-width: 720px; line-height: 1.6; }
+
+    /* ===== Mobile — lock hero scroll initially, keep animations smooth ===== */
+    @media (max-width: 768px){
+      /* underline shorter & closer */
+      .btn::after{ width: 60%; bottom: 6px; }
+
+      /* If hero is locked, make sure content still centers nicely */
+      .hero{ min-height: 100svh; }
     }
 
-    /* ===== Mobile: wrap title + no-scroll card feel ===== */
-    @media (max-width: 700px){
-      html, body { overflow: hidden; }
-      .hero{ width: min(92vw, 520px); gap: var(--s-2); }
-      .name{ white-space: normal; font-size: clamp(26px, 7vw, 42px); }
-      .btn{ width: var(--btn-width-mobile); }
-    }
-
-    /* ===== Reduced motion handling =====
-       We keep accessibility but allow a manual override via .anim-on on <html> */
+    /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
-      body, .hero, .btn.idle-glow { animation: none !important; }
-      html.anim-on body { animation: bgShift 24s ease-in-out infinite !important; }
-      html.anim-on .hero { animation: breathe 5.5s ease-in-out infinite !important; }
-      html.anim-on .btn.idle-glow { animation: glow 2.8s ease-in-out infinite !important; }
-    }
-
-    /* Slightly quicker desktop motion (optional polish) */
-    @media (min-width:1000px){
-      body{ animation-duration: 22s; }
-      .hero{ animation-duration: 5.5s; }
+      body{ animation: none; }
+      .hero{ transition: none; }
+      h1, .buttons{ transition: none; opacity: 1; transform: none; }
+      .btn, .btn::after{ transition: none; }
     }
   </style>
 </head>
 <body>
-  <main class="wrap" role="main">
-    <section class="hero" aria-label="Homepage">
-      <h1 class="name" aria-label="Francisco Zenarolla">Francisco Zenarolla</h1>
-      <nav class="buttons" aria-label="Primary">
-        <a class="btn" href="/resume" aria-label="Resume">RESUME</a>
-        <a class="btn" href="/projects" aria-label="Projects">PROJECTS</a>
-        <a class="btn" href="/contact" aria-label="Contact">CONTACT</a>
-      </nav>
+  <header>
+    <nav aria-label="Primary"></nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="home" class="hero" aria-labelledby="site-title">
+      <div class="container">
+        <h1 id="site-title">Francisco Zenarolla</h1>
+
+        <div class="buttons" role="navigation" aria-label="Sections">
+          <a class="btn" href="#resume" aria-label="Go to resume section">Resume</a>
+          <a class="btn" href="#projects" aria-label="Go to projects section">Projects</a>
+          <a class="btn" href="#contact" aria-label="Go to contact section">Contact</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLACEHOLDER SECTIONS (so links work now; replace with content when ready) -->
+    <section id="resume" class="anchor" aria-labelledby="resume-h2">
+      <h2 id="resume-h2">Resume</h2>
+      <p>Add a PDF link or embedded resume here when ready.</p>
+    </section>
+
+    <section id="projects" class="anchor" aria-labelledby="projects-h2">
+      <h2 id="projects-h2">Projects</h2>
+      <p>Showcase a few projects with one-liners and links/screenshots.</p>
+    </section>
+
+    <section id="contact" class="anchor" aria-labelledby="contact-h2">
+      <h2 id="contact-h2">Contact</h2>
+      <p>Provide a contact form, email (e.g., <a href="mailto:you@example.com">you@example.com</a>), and social links.</p>
     </section>
   </main>
 
-  <!-- Idle glow + animation override -->
   <script>
-    (function () {
-      // Force animations even if OS has reduced motion preference
-      document.documentElement.classList.add('anim-on');
+    // Helper: device checks
+    const isDesktop = () => window.innerWidth > 768;
 
-      let idleTimer;
-      const buttons = document.querySelectorAll('.btn');
+    // Fade-in on load
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('home')?.classList.add('loaded');
 
-      function startIdleGlow(){ buttons.forEach(b => b.classList.add('idle-glow')); }
-      function stopIdleGlow(){ buttons.forEach(b => b.classList.remove('idle-glow')); }
-      function resetIdleTimer(){
-        stopIdleGlow();
-        clearTimeout(idleTimer);
-        idleTimer = setTimeout(startIdleGlow, 5000); // 5s idle
+      // Attention glow after 3s (works on mobile because it's JS-applied)
+      setTimeout(() => {
+        document.querySelectorAll('.btn').forEach(btn => btn.classList.add('auto-glow'));
+      }, 3000);
+
+      // Desktop-only parallax + hero zoom
+      if (isDesktop()) {
+        window.addEventListener('scroll', () => {
+          const y = window.scrollY || 0;
+          const title = document.querySelector('#home h1');
+          const buttons = document.querySelector('#home .buttons');
+          const hero = document.getElementById('home');
+          if (title)   title.style.transform   = `translateY(${y * 0.15}px)`;
+          if (buttons) buttons.style.transform = `translateY(${y * 0.25}px)`;
+          if (hero) {
+            const scale = 1 + y * 0.001;      // stronger but tasteful
+            hero.style.transform = `scale(${scale})`;
+            hero.style.transformOrigin = 'center top';
+          }
+        }, { passive: true });
+      } else {
+        // Mobile: lock scroll on hero until user picks a section
+        const lockScroll = () => {
+          document.documentElement.style.overflow = 'hidden';
+          document.body.style.overflow = 'hidden';
+        };
+        const unlockScroll = () => {
+          document.documentElement.style.overflow = '';
+          document.body.style.overflow = '';
+        };
+        lockScroll();
+
+        // When a nav button is tapped, unlock and let it scroll to the section
+        document.querySelectorAll('.btn[href^="#"]').forEach(a => {
+          a.addEventListener('click', () => {
+            // allow the default smooth scroll to happen now
+            unlockScroll();
+          }, { passive: true });
+        });
       }
+    });
 
-      ['mousemove','keydown','touchstart','scroll'].forEach(evt=>{
-        window.addEventListener(evt, resetIdleTimer, { passive:true });
-      });
-
-      resetIdleTimer();
-    })();
+    // If window is resized across breakpoint, a reload keeps behavior consistent
+    window.addEventListener('resize', () => {
+      // optional: debounce a bit
+      clearTimeout(window.__rz);
+      window.__rz = setTimeout(() => {
+        // No-op if only a small change; hard refresh ensures correct mode
+        // Comment out if you don't want this behavior.
+        // location.reload();
+      }, 250);
+    });
   </script>
 </body>
 </html>
