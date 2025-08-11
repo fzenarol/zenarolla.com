@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Francisco Zenarolla - Portfolio</title>
-    <link rel="stylesheet" href="styles.css?v=4">
+    <link rel="stylesheet" href="styles.css?v=5">
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('home')?.classList.add('loaded');
       });
+
+      // Stronger parallax effect
       window.addEventListener('scroll', () => {
         const y = window.scrollY || 0;
         const title = document.querySelector('#home h1');
         const buttons = document.querySelector('#home .buttons');
-        if (title) title.style.transform = `translateY(${y * 0.05}px)`;
-        if (buttons) buttons.style.transform = `translateY(${y * 0.08}px)`;
+        if (title) title.style.transform = `translateY(${y * 0.15}px)`;   // was 0.05
+        if (buttons) buttons.style.transform = `translateY(${y * 0.25}px)`; // was 0.08
       }, { passive: true });
     </script>
 </head>
