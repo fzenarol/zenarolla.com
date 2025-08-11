@@ -46,7 +46,7 @@ h1 {
   letter-spacing:8px;
   opacity:0;
   transform:translateY(16px);
-  transition: opacity 500ms ease, transform 500ms ease; /* removed letter-spacing transition */
+  transition: opacity 500ms ease, transform 500ms ease; /* no letter-spacing transition */
 }
 h1:hover {
   letter-spacing:10px; /* instant change */
@@ -116,10 +116,41 @@ h1:hover {
 #home.loaded .buttons .btn:nth-child(2) { transition-delay:320ms; }
 #home.loaded .buttons .btn:nth-child(3) { transition-delay:400ms; }
 
-/* ===== Responsive ===== */
-@media (max-width:768px) {
-  h1 { font-size:2.5rem; letter-spacing:6px; }
-  .buttons { flex-direction:column; gap:20px; }
+/* ===== Mobile adjustments ===== */
+@media (max-width: 768px) {
+  /* Keep fade-in but remove parallax/zoom on mobile */
+  #home {
+    transform: none !important; /* no zoom */
+    transition: opacity 500ms ease, transform 500ms ease !important;
+  }
+  #home h1,
+  #home .buttons {
+    transform: translateY(0) !important; /* no parallax shift */
+    transition: opacity 500ms ease, transform 500ms ease !important;
+  }
+
+  /* Adjust title for smaller screens */
+  h1 {
+    font-size: 2rem;
+    letter-spacing: 4px;
+    margin-bottom: 25px;
+  }
+  h1:hover {
+    letter-spacing: 5px; /* subtle hover change on mobile */
+  }
+
+  /* Stack buttons vertically for easier tapping */
+  .buttons {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  /* Slightly smaller buttons */
+  .btn {
+    padding: 10px 24px;
+    font-size: 1rem;
+    letter-spacing: 3px;
+  }
 }
 
 /* ===== Reduced motion ===== */
