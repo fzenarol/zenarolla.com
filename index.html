@@ -23,10 +23,8 @@
       --content-reveal:260ms;
     }
 
-    body{
-      font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;
-      color:var(--ink);
-      min-height:100vh;
+    /* Paint/animate gradient on <html> to avoid iOS white flash */
+    html{
       background:linear-gradient(120deg,var(--bg1),var(--bg2),var(--bg1));
       background-size:400% 400%;
       animation:bgShift 24s ease-in-out infinite;
@@ -35,6 +33,20 @@
       0%{background-position:0% 50%}
       50%{background-position:100% 50%}
       100%{background-position:0% 50%}
+    }
+
+    body{
+      font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;
+      color:var(--ink);
+      min-height:100vh;
+      /* body can be transparent; html provides the gradient */
+      background:transparent;
+    }
+
+    /* Global, safe scroll lock (used on home for mobile) */
+    html.no-scroll, body.no-scroll{
+      overflow:hidden;
+      overscroll-behavior:none;
     }
 
     /* ===== SPA pages with cross-fade ===== */
@@ -121,23 +133,30 @@
       .back-btn .label{display:inline}
     }
     @media (max-width:768px){
-      .home .hero{min-height:100svh}
+      /* Keep home from scrolling; page itself also has overflow hidden */
+      .home.page{overflow:hidden;}
+
+      .home .hero{
+        min-height:100vh;   /* fallback */
+        min-height:100svh;  /* iOS small viewport */
+      }
+
       .btn{padding:14px 28px}
       .back-btn .label{display:none}
       .back-btn .arrow{font-size:1.4rem}
       .back-btn{padding:10px 14px}
+    }
 
-      /* ✅ Lock scrolling on home (mobile only) */
-      body.no-scroll{
-        position:fixed; inset:0; overflow:hidden; width:100%; height:100svh;
-        touch-action:none; overscroll-behavior:none;
+    /* Prefer the dynamic viewport on modern browsers */
+    @supports (min-height: 100dvh){
+      @media (max-width:768px){
+        .home .hero{ min-height:100dvh; }
       }
-      .home.page{overflow:hidden;}
     }
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
-      body{animation:none}
+      html{animation:none}
       .page,.content{transition:none;opacity:1;transform:none}
       h1,.buttons{transition:none;opacity:1;transform:none}
       .btn,.btn::before{transition:none}
@@ -165,7 +184,7 @@
     <div class="page-inner">
       <div class="content">
         <h2>Resume</h2>
-        <p>Coming soon...</p>
+        <p>Add your PDF link or an embedded viewer here.</p>
         <a class="btn back-btn" href="#/"><span class="arrow">←</span><span class="label">Back to Home</span></a>
       </div>
     </div>
@@ -176,7 +195,7 @@
     <div class="page-inner">
       <div class="content">
         <h2>Projects</h2>
-        <p>Coming soon...</p>
+        <p>Showcase 3–6 projects with short descriptions and links.</p>
         <a class="btn back-btn" href="#/"><span class="arrow">←</span><span class="label">Back to Home</span></a>
       </div>
     </div>
@@ -209,7 +228,6 @@
       const nextPage = document.getElementById(id) || document.getElementById('home');
 
       if (currentPage === nextPage) {
-        // Ensure body lock reflects route on initial load/refresh
         toggleHomeLock(route);
         return;
       }
@@ -232,10 +250,11 @@
       if (route === '/') startSweepLoop(); else stopSweepLoop();
     }
 
+    // Lock/unlock scrolling by toggling class on <html> and <body>
     function toggleHomeLock(route){
-      // Lock scroll on mobile when on home
-      if (route === '/') document.body.classList.add('no-scroll');
-      else document.body.classList.remove('no-scroll');
+      const lock = route === '/';
+      document.body.classList.toggle('no-scroll', lock);
+      document.documentElement.classList.toggle('no-scroll', lock);
     }
 
     window.addEventListener('hashchange', () => showRoute(currentRoute()));
