@@ -19,8 +19,8 @@
       --btn-top:#0a0a0a; --btn-bot:#000000; --btn-border:#000000;
       --btn-hover-top:#161616; --btn-hover-bot:#050505; --btn-hover-border:#1f1f1f;
       --btn-text:#fafafa;
-      --page-fade:300ms;          /* page cross-fade duration */
-      --content-reveal:260ms;     /* inner content lift/fade */
+      --page-fade:300ms;
+      --content-reveal:260ms;
     }
 
     body{
@@ -43,7 +43,7 @@
       display:none; opacity:0; transform:translateY(8px);
       transition: opacity var(--page-fade) ease, transform var(--page-fade) ease;
       z-index:0;
-      background:transparent; /* keep body gradient visible */
+      background:transparent;
     }
     .page.active{display:block; opacity:1; transform:translateY(0); z-index:1;}
     .page.leaving{display:block; opacity:0; transform:translateY(8px); z-index:0;}
@@ -53,7 +53,7 @@
     .container{width:min(800px,92vw);margin-inline:auto}
 
     h1{
-      font-weight:300; /* mobile default; desktop bumped below */
+      font-weight:300;
       font-size:clamp(2.2rem,5.5vw,4rem);
       letter-spacing:4px;
       margin:0 0 32px 0;opacity:0;transform:translateY(16px);
@@ -83,7 +83,7 @@
     }
     .btn:active{transform:scale(.99)}
 
-    /* Gold keyline sweep (home buttons only) — slowed from 1400ms -> 1600ms */
+    /* Gold keyline sweep (home buttons only) — 1600ms */
     .btn::before{
       content:"";position:absolute;inset:-2px;border-radius:0;padding:1.5px;opacity:0;pointer-events:none;
       background:linear-gradient(90deg,transparent 0%,var(--gold1) 15%,var(--gold2) 50%,var(--gold1) 85%,transparent 100%);
@@ -106,26 +106,33 @@
     .content h2{margin:0 0 16px 0;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
     .content p{line-height:1.6;margin:0 0 16px 0}
 
-    /* Back to Home (desktop label, mobile arrow-only) + spacing */
+    /* Back to Home (desktop label, mobile arrow-only) */
     .back-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:28px}
     .back-btn .arrow{font-size:1.2rem;line-height:1}
 
-    /* Contact email hover: subtle underline grow */
+    /* Contact email hover */
     .email-link{color:#111;text-decoration:none;position:relative;padding-bottom:2px;background-image:linear-gradient(currentColor,currentColor);background-size:0% 1px;background-repeat:no-repeat;background-position:0 100%;transition:background-size 180ms ease}
     .email-link:hover{background-size:100% 1px}
 
     @media (min-width:769px){
       .buttons{flex-direction:row;gap:24px}
       .btn{font-size:1.1rem}
-      h1{font-weight:400} /* desktop title weight refinement */
+      h1{font-weight:400}
       .back-btn .label{display:inline}
     }
     @media (max-width:768px){
       .home .hero{min-height:100svh}
-      .btn{padding:14px 28px}          /* larger touch targets */
-      .back-btn .label{display:none}   /* mobile shows arrow only */
+      .btn{padding:14px 28px}
+      .back-btn .label{display:none}
       .back-btn .arrow{font-size:1.4rem}
       .back-btn{padding:10px 14px}
+
+      /* ✅ Lock scrolling on home (mobile only) */
+      body.no-scroll{
+        position:fixed; inset:0; overflow:hidden; width:100%; height:100svh;
+        touch-action:none; overscroll-behavior:none;
+      }
+      .home.page{overflow:hidden;}
     }
 
     /* Reduced motion */
@@ -201,7 +208,11 @@
       const id = route === '/' ? 'home' : route.slice(1);
       const nextPage = document.getElementById(id) || document.getElementById('home');
 
-      if (currentPage === nextPage) return;
+      if (currentPage === nextPage) {
+        // Ensure body lock reflects route on initial load/refresh
+        toggleHomeLock(route);
+        return;
+      }
 
       // Fade out old page
       if (currentPage){
@@ -216,8 +227,15 @@
       nextPage.classList.add('active');
       currentPage = nextPage;
 
-      // Home-only sweep loop
+      // Home-only sweep loop & scroll lock
+      toggleHomeLock(route);
       if (route === '/') startSweepLoop(); else stopSweepLoop();
+    }
+
+    function toggleHomeLock(route){
+      // Lock scroll on mobile when on home
+      if (route === '/') document.body.classList.add('no-scroll');
+      else document.body.classList.remove('no-scroll');
     }
 
     window.addEventListener('hashchange', () => showRoute(currentRoute()));
@@ -238,7 +256,7 @@
       });
       setTimeout(() => {
         document.querySelectorAll('.home .btn').forEach(b => b.classList.remove('keyline-sweep'));
-      }, 2200); // a bit longer to cover 1600ms anim + buffer
+      }, 2200);
     }
     function startSweepLoop(){
       if (sweepInterval) return;
