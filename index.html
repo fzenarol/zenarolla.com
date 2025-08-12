@@ -91,18 +91,29 @@
     .content p{line-height:1.6;margin:0 0 16px 0}
 
     .back-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px}
-    .back-btn .arrow{font-size:1.2rem;line-height:1}
+    .back-btn .arrow{font-size:1.2rem;line-height:1;transition:transform 0.3s ease}
 
+    /* Desktop: show label, animate arrow on hover */
     @media (min-width:769px){
       .buttons{flex-direction:row;gap:24px}
       .btn{font-size:1.1rem}
-      .back-btn .label{display:inline} /* Desktop shows full label */
+      .back-btn .label{display:inline}
+      .back-btn:hover .arrow{animation:arrowNudge 0.6s ease-in-out}
     }
+    /* Mobile: only arrow, no label */
     @media (max-width:768px){
       .home .hero{min-height:100svh}
-      .back-btn .label{display:none}    /* Mobile hides label */
+      .back-btn .label{display:none}
       .back-btn .arrow{font-size:1.4rem}
       .back-btn{padding:10px 14px}
+    }
+
+    @keyframes arrowNudge{
+      0%{transform:translateX(0)}
+      25%{transform:translateX(-3px)}
+      50%{transform:translateX(0)}
+      75%{transform:translateX(-3px)}
+      100%{transform:translateX(0)}
     }
   </style>
 </head>
