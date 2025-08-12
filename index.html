@@ -35,9 +35,11 @@
       100%{background-position:0% 50%}
     }
 
+    /* SPA pages */
     .page{display:none;min-height:100vh}
     .page.active{display:flex}
 
+    /* Home (hero) */
     .hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
     .container{width:min(800px,92vw);margin-inline:auto}
 
@@ -55,7 +57,8 @@
     body.loaded .home .buttons{opacity:1;transform:translateY(0)}
 
     .btn{
-      position:relative;display:inline-block;padding:12px 32px;border-radius:0;
+      position:relative;display:inline-flex;align-items:center;justify-content:center;
+      padding:12px 32px;border-radius:0;
       color:var(--btn-text);text-decoration:none;font-size:1.05rem;font-weight:400;
       text-transform:uppercase;letter-spacing:2.5px;background:linear-gradient(180deg,var(--btn-top),var(--btn-bot));
       border:1px solid var(--btn-border);
@@ -69,6 +72,7 @@
     }
     .btn:active{transform:scale(.99)}
 
+    /* Gold keyline sweep (home buttons only) */
     .btn::before{
       content:"";position:absolute;inset:-2px;border-radius:0;padding:1.5px;opacity:0;pointer-events:none;
       background:linear-gradient(90deg,transparent 0%,var(--gold1) 15%,var(--gold2) 50%,var(--gold1) 85%,transparent 100%);
@@ -89,8 +93,27 @@
     .content h2{margin:0 0 16px 0;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
     .content p{line-height:1.6;margin:0 0 16px 0}
 
-    @media (min-width:769px){ .buttons{flex-direction:row;gap:24px}.btn{font-size:1.1rem} }
-    @media (max-width:768px){ .home .hero{min-height:100svh} }
+    /* Back to Home (desktop = label, mobile = arrow only) */
+    .back-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px}
+    .back-btn .arrow{font-size:1.2rem;line-height:1}
+
+    @media (min-width:769px){
+      .buttons{flex-direction:row;gap:24px}
+      .btn{font-size:1.1rem}
+    }
+    @media (max-width:768px){
+      .home .hero{min-height:100svh}
+      .back-btn span.label{display:none}   /* hide text on mobile */
+      .back-btn .arrow{font-size:1.4rem}
+      .back-btn{padding:10px 14px}
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      body{animation:none}
+      h1,.buttons{transition:none;opacity:1;transform:none}
+      .btn,.btn::before{transition:none}
+    }
   </style>
 </head>
 <body>
@@ -115,7 +138,7 @@
       <div class="content">
         <h2>Resume</h2>
         <p>Add your PDF link or an embedded viewer here.</p>
-        <a class="btn" href="#/">Back to Home</a>
+        <a class="btn back-btn" href="#/"><span class="arrow">←</span><span class="label">Back to Home</span></a>
       </div>
     </div>
   </section>
@@ -126,7 +149,7 @@
       <div class="content">
         <h2>Projects</h2>
         <p>Showcase 3–6 projects with short descriptions and links.</p>
-        <a class="btn" href="#/">Back to Home</a>
+        <a class="btn back-btn" href="#/"><span class="arrow">←</span><span class="label">Back to Home</span></a>
       </div>
     </div>
   </section>
@@ -137,12 +160,13 @@
       <div class="content">
         <h2>Contact</h2>
         <p>Email: <a href="mailto:francisco@zenarolla.com">francisco@zenarolla.com</a></p>
-        <a class="btn" href="#/">Back to Home</a>
+        <a class="btn back-btn" href="#/"><span class="arrow">←</span><span class="label">Back to Home</span></a>
       </div>
     </div>
   </section>
 
   <script>
+    // Simple hash router
     const routes = ['/', '/resume', '/projects', '/contact'];
 
     function currentRoute(){
@@ -150,12 +174,14 @@
       if (!raw || raw === '/' || raw === '') return '/';
       return raw.startsWith('/') ? raw : '/' + raw;
     }
+
     function showRoute(route){
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       const id = route === '/' ? 'home' : route.slice(1);
       (document.getElementById(id) || document.getElementById('home')).classList.add('active');
       if (route === '/') startSweepLoop(); else stopSweepLoop();
     }
+
     window.addEventListener('hashchange', () => showRoute(currentRoute()));
     document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.add('loaded');
@@ -163,12 +189,13 @@
       showRoute(currentRoute());
     });
 
+    // Gold sweep on HOME only (every 4s)
     let sweepInterval = null;
     function sweepOnce() {
       const buttons = document.querySelectorAll('.home .btn');
       buttons.forEach(btn => {
         btn.classList.remove('keyline-sweep');
-        void btn.offsetWidth;
+        void btn.offsetWidth; // reset
         btn.classList.add('keyline-sweep');
       });
       setTimeout(() => {
