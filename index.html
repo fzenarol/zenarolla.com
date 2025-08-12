@@ -70,6 +70,7 @@
     }
     .btn:active{transform:scale(.99)}
 
+    /* Gold keyline sweep (home buttons only) */
     .btn::before{
       content:"";position:absolute;inset:-2px;border-radius:0;padding:1.5px;opacity:0;pointer-events:none;
       background:linear-gradient(90deg,transparent 0%,var(--gold1) 15%,var(--gold2) 50%,var(--gold1) 85%,transparent 100%);
@@ -90,17 +91,15 @@
     .content h2{margin:0 0 16px 0;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
     .content p{line-height:1.6;margin:0 0 16px 0}
 
+    /* Back to Home (desktop label, mobile arrow-only) */
     .back-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px}
-    .back-btn .arrow{font-size:1.2rem;line-height:1;transition:transform 0.3s ease}
+    .back-btn .arrow{font-size:1.2rem;line-height:1}
 
-    /* Desktop: show label, animate arrow on hover */
     @media (min-width:769px){
       .buttons{flex-direction:row;gap:24px}
       .btn{font-size:1.1rem}
       .back-btn .label{display:inline}
-      .back-btn:hover .arrow{animation:arrowNudge 0.6s ease-in-out}
     }
-    /* Mobile: only arrow, no label */
     @media (max-width:768px){
       .home .hero{min-height:100svh}
       .back-btn .label{display:none}
@@ -108,13 +107,19 @@
       .back-btn{padding:10px 14px}
     }
 
-    @keyframes arrowNudge{
-      0%{transform:translateX(0)}
-      25%{transform:translateX(-3px)}
-      50%{transform:translateX(0)}
-      75%{transform:translateX(-3px)}
-      100%{transform:translateX(0)}
+    /* Typing effect */
+    .typing-wrap{white-space:pre-wrap}
+    .typing-line{margin:0 0 16px 0}
+    .typing-caret{
+      display:inline-block;width:1px;height:1em;vertical-align:-0.2em;background:#111;margin-left:2px;
+      animation:blink 1s steps(1,end) infinite;
     }
+    @keyframes blink{50%{opacity:0}}
+
+    /* Hide original content while typing, then fade it back in */
+    .content.is-typing > *{visibility:hidden}
+    .content.revealed{animation:fadeIn 220ms ease-out}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
   </style>
 </head>
 <body>
@@ -167,6 +172,7 @@
   </section>
 
   <script>
+    // --- Simple hash router ---
     const routes = ['/', '/resume', '/projects', '/contact'];
 
     function currentRoute(){
@@ -178,8 +184,10 @@
     function showRoute(route){
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       const id = route === '/' ? 'home' : route.slice(1);
-      (document.getElementById(id) || document.getElementById('home')).classList.add('active');
-      if (route === '/') startSweepLoop(); else stopSweepLoop();
+      const page = document.getElementById(id) || document.getElementById('home');
+      page.classList.add('active');
+      if (route === '/') { startSweepLoop(); }
+      else { stopSweepLoop(); startTypingForPage(id); }
     }
 
     window.addEventListener('hashchange', () => showRoute(currentRoute()));
@@ -187,14 +195,16 @@
       document.body.classList.add('loaded');
       if (!routes.includes(currentRoute())) location.hash = '#/';
       showRoute(currentRoute());
+      cacheOriginalContent();
     });
 
+    // --- Gold sweep on HOME only (every 4s) ---
     let sweepInterval = null;
     function sweepOnce() {
       const buttons = document.querySelectorAll('.home .btn');
       buttons.forEach(btn => {
         btn.classList.remove('keyline-sweep');
-        void btn.offsetWidth;
+        void btn.offsetWidth; // reset
         btn.classList.add('keyline-sweep');
       });
       setTimeout(() => {
@@ -211,6 +221,119 @@
     }
     function stopSweepLoop(){
       if (sweepInterval) { clearInterval(sweepInterval); sweepInterval = null; }
+    }
+
+    // --- Typing effect on inner pages ---
+    const originalContent = new Map();
+
+    function cacheOriginalContent(){
+      ['resume','projects','contact'].forEach(id => {
+        const content = document.querySelector('#' + id + ' .content');
+        if (content) originalContent.set(id, content.innerHTML);
+      });
+    }
+
+    let typingAbortController = null;
+
+    async function startTypingForPage(id){
+      const content = document.querySelector('#' + id + ' .content');
+      if (!content) return;
+
+      // If already typing, abort previous
+      if (typingAbortController) typingAbortController.abort();
+      typingAbortController = new AbortController();
+      const { signal } = typingAbortController;
+
+      // Reset to original markup to ensure clean slate
+      const html = originalContent.get(id) || content.innerHTML;
+
+      // Build a mirror "typing" structure using plain text lines (h2, p), then reveal real content after
+      const blocks = Array.from(content.querySelectorAll(':scope > h2, :scope > p'));
+      const backBtn = content.querySelector(':scope > .back-btn') || content.querySelector(':scope > a.back-btn');
+
+      // Hide real content while typing
+      content.classList.add('is-typing');
+
+      // Insert typing wrapper at the top
+      let typingWrap = content.querySelector('.typing-wrap');
+      if (typingWrap) typingWrap.remove();
+      typingWrap = document.createElement('div');
+      typingWrap.className = 'typing-wrap';
+      content.prepend(typingWrap);
+
+      // Create mirror lines for each block
+      const mirrors = blocks.map((el) => {
+        const tag = el.tagName.toLowerCase();
+        const mirror = document.createElement(tag);
+        mirror.className = 'typing-line';
+        typingWrap.appendChild(mirror);
+        return { src: el, mirror };
+      });
+
+      // Also add a caret span to the last line
+      let caret = document.createElement('span');
+      caret.className = 'typing-caret';
+      // caret appended as we type
+
+      // Typing speed (slightly slower on mobile)
+      const perChar = (window.innerWidth <= 768) ? 22 : 16; // ms per char
+      const perLinePause = 120; // pause between lines
+
+      try {
+        for (let i = 0; i < mirrors.length; i++){
+          if (signal.aborted) return;
+          const { src, mirror } = mirrors[i];
+
+          // Use innerText so layout feels natural; links will be restored when real content returns
+          const text = src.innerText || src.textContent || '';
+          await typeTextInto(mirror, text, perChar, signal);
+
+          // Append caret to current line while typing next line
+          if (i === mirrors.length - 1) {
+            mirror.appendChild(caret);
+          } else {
+            await sleep(perLinePause, signal);
+          }
+        }
+
+        // Small final pause, then reveal real content & back button
+        await sleep(150, signal);
+
+      } catch (e) {
+        // aborted or error — just fall through to reveal
+      } finally {
+        // Clean up typing layer and reveal real content (with links intact)
+        typingWrap.remove();
+        content.classList.remove('is-typing');
+        // Force a tiny fade-in to make the reveal feel intentional
+        content.classList.add('revealed');
+        setTimeout(()=>content.classList.remove('revealed'), 250);
+      }
+    }
+
+    function sleep(ms, signal){
+      return new Promise((res, rej)=>{
+        const t = setTimeout(res, ms);
+        if (signal) signal.addEventListener('abort', ()=>{ clearTimeout(t); rej(new DOMException('Aborted','AbortError')); }, { once:true });
+      });
+    }
+
+    function typeTextInto(el, text, perChar, signal){
+      return new Promise((resolve, reject) => {
+        el.textContent = '';
+        let i = 0;
+        function step(){
+          if (signal && signal.aborted) return reject(new DOMException('Aborted','AbortError'));
+          if (i <= text.length){
+            el.textContent = text.slice(0, i);
+            i++;
+            setTimeout(step, perChar);
+          } else {
+            resolve();
+          }
+        }
+        step();
+      });
     }
   </script>
 </body>
