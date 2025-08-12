@@ -96,10 +96,11 @@
     @media (min-width:769px){
       .buttons{flex-direction:row;gap:24px}
       .btn{font-size:1.1rem}
+      .back-btn .label{display:inline} /* Desktop shows full label */
     }
     @media (max-width:768px){
       .home .hero{min-height:100svh}
-      .back-btn .label{display:none}
+      .back-btn .label{display:none}    /* Mobile hides label */
       .back-btn .arrow{font-size:1.4rem}
       .back-btn{padding:10px 14px}
     }
@@ -127,7 +128,7 @@
       <div class="content">
         <h2>Resume</h2>
         <p>Add your PDF link or an embedded viewer here.</p>
-        <a class="btn back-btn" href="#/"><span class="arrow">←</span><span class="label">Home</span></a>
+        <a class="btn back-btn" href="#/"><span class="arrow">←</span><span class="label">Back to Home</span></a>
       </div>
     </div>
   </section>
@@ -138,7 +139,7 @@
       <div class="content">
         <h2>Projects</h2>
         <p>Showcase 3–6 projects with short descriptions and links.</p>
-        <a class="btn back-btn" href="#/"><span class="arrow">←</span><span class="label">Home</span></a>
+        <a class="btn back-btn" href="#/"><span class="arrow">←</span><span class="label">Back to Home</span></a>
       </div>
     </div>
   </section>
@@ -149,7 +150,7 @@
       <div class="content">
         <h2>Contact</h2>
         <p>Email: <a href="mailto:francisco@zenarolla.com">francisco@zenarolla.com</a></p>
-        <a class="btn back-btn" href="#/"><span class="arrow">←</span><span class="label">Home</span></a>
+        <a class="btn back-btn" href="#/"><span class="arrow">←</span><span class="label">Back to Home</span></a>
       </div>
     </div>
   </section>
