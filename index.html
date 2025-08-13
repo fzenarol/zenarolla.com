@@ -23,7 +23,7 @@
       --content-reveal:260ms;
     }
 
-    /* Paint/animate gradient on <html> to avoid iOS white flash */
+    /* Animated gradient on <html> to avoid iOS white flash */
     html{
       background:linear-gradient(120deg,var(--bg1),var(--bg2),var(--bg1));
       background-size:400% 400%;
@@ -39,22 +39,17 @@
       font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;
       color:var(--ink);
       min-height:100vh;
-      background:transparent; /* html handles gradient */
+      background:transparent; /* html provides gradient */
     }
 
-    /* Global, safe scroll lock (used on home for mobile) */
-    html.no-scroll, body.no-scroll{
-      overflow:hidden;
-      overscroll-behavior:none;
-    }
+    html.no-scroll, body.no-scroll{ overflow:hidden; overscroll-behavior:none; }
 
     /* ===== SPA pages with cross-fade ===== */
     .page{
       position:fixed; inset:0; overflow:auto;
       display:none; opacity:0; transform:translateY(8px);
       transition: opacity var(--page-fade) ease, transform var(--page-fade) ease;
-      z-index:0;
-      background:transparent;
+      z-index:0; background:transparent;
     }
     .page.active{display:block; opacity:1; transform:translateY(0); z-index:1;}
     .page.leaving{display:block; opacity:0; transform:translateY(8px); z-index:0;}
@@ -112,7 +107,7 @@
 
     /* ===== Inner pages content reveal ===== */
     .page-inner{min-height:100%;display:flex;align-items:flex-start;justify-content:center;padding:96px 20px 120px}
-    .content{width:min(900px,92vw); opacity:0; transform:translateY(8px); transition:opacity var(--content-reveal) ease, transform var(--content-reveal) ease;}
+    .content{width:min(860px,92vw); opacity:0; transform:translateY(8px); transition:opacity var(--content-reveal) ease, transform var(--content-reveal) ease;}
     .active .content{opacity:1; transform:translateY(0);}
     .content h2{margin:0 0 16px 0;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
     .content p{line-height:1.6;margin:0 0 16px 0}
@@ -149,7 +144,7 @@
       .btn,.btn::before{transition:none}
     }
 
-    /* ===== Resume block styles (scoped, no blue/gray) ===== */
+    /* ===== Resume block styles (scoped, neutral) ===== */
     .zr-resume{
       font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;
       color:var(--ink);
@@ -157,7 +152,7 @@
       border:1px solid var(--ink);
       border-radius:10px;
       box-shadow:0 8px 26px rgba(0,0,0,.06);
-      padding:22px 22px 8px;
+      padding:18px 22px 12px; /* tighter */
     }
     .zr-resume h3{
       margin:0 0 12px 0;
@@ -167,12 +162,12 @@
       text-transform:none;
       font-size:1.05rem;
     }
-    .zr-row{margin:18px 0}
+    .zr-row{margin:14px 0} /* tighter sections */
     .zr-row:first-child{margin-top:6px}
     .zr-title{font-weight:600;color:var(--ink);margin-bottom:2px}
-    .zr-sub{color:var(--ink);font-weight:500;margin-bottom:6px}
+    .zr-sub{color:var(--ink);font-weight:500;margin-bottom:2px} /* closer to bullets */
     .zr-ul{margin:6px 0 0 18px}
-    .zr-ul li{margin:6px 0;line-height:1.55}
+    .zr-ul li{margin:4px 0;line-height:1.55}
     .zr-skillchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
     .zr-chip{
       border:1px solid var(--ink);
@@ -186,7 +181,7 @@
     }
     .zr-headerline{
       display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;
-      margin-bottom:14px;color:var(--ink)
+      margin-bottom:10px;color:var(--ink)
     }
     .zr-headerline a{
       color:var(--ink);
@@ -194,6 +189,47 @@
       border-bottom:1px solid transparent
     }
     .zr-headerline a:hover{border-bottom-color:var(--ink)}
+
+    /* ===== Print / PDF ===== */
+    @media print {
+      html, body { background:#fff !important; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+      /* Hide non-resume UI */
+      .home, .back-btn, .buttons { display:none !important; }
+      .page { position:static; inset:auto; display:block; opacity:1 !important; transform:none !important; }
+      .page-inner { padding:0 !important; }
+      .content { width:100% !important; margin:0 auto !important; }
+
+      /* Resume formatting */
+      .zr-resume {
+        border:none !important;
+        box-shadow:none !important;
+        padding:0 !important;
+        color:#000 !important;
+        font-size:12pt;
+      }
+      .zr-headerline {
+        justify-content:flex-start !important;
+        margin-bottom:8pt !important;
+      }
+      .zr-resume h3 {
+        font-size:12.5pt;
+        margin:10pt 0 6pt;
+      }
+      .zr-row { margin:10pt 0 !important; }
+      .zr-ul li { margin:3pt 0 !important; line-height:1.4; }
+
+      /* Page size + margins */
+      @page {
+        size: Letter; /* change to A4 if needed */
+        margin: 0.6in 0.6in 0.6in 0.6in;
+      }
+
+      /* Keep logical chunks together */
+      .zr-row, .zr-title, .zr-ul { page-break-inside: avoid; }
+      h2, h3 { page-break-after: avoid; }
+    }
   </style>
 </head>
 <body>
@@ -218,7 +254,10 @@
       <div class="content">
         <h2>Resume</h2>
 
-        <!-- ===== Resume Block (Exact Wording Preserved) ===== -->
+        <!-- Download PDF button -->
+        <a class="btn" href="#" onclick="window.print(); return false;" style="margin-bottom:16px; display:inline-block;">Download as PDF</a>
+
+        <!-- ===== Resume Block (Exact Wording Preserved, spacing tightened) ===== -->
         <div class="zr-resume" aria-label="Resume">
           <div class="zr-headerline">
             <strong>Francisco Zenarolla</strong> · Virginia Beach, VA 23455 ·
@@ -283,7 +322,8 @@
               <li>Directed large-scale door-to-door and phone-based engagement operations, tracking interaction metrics to guide resource allocation.</li>
               <li>Negotiated and secured hundreds of high-visibility marketing locations across multiple districts, maximizing campaign reach and brand exposure.</li>
               <li>Trained and supervised new team members, implementing performance tracking that improved productivity.</li>
-              <li>Developed scripts and guides to standardize communication, reducing inconsistencies in messaging.</li>
+              <!-- Removed per your request:
+                   Developed scripts and guides to standardize communication, reducing inconsistencies in messaging. -->
               <li>Compiled and reported interaction metrics, providing leadership with actionable insights for strategic adjustments.</li>
             </ul>
 
