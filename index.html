@@ -161,6 +161,42 @@
       h1,.buttons{transition:none;opacity:1;transform:none}
       .btn,.btn::before{transition:none}
     }
+
+    /* ===== Resume block styles (scoped) ===== */
+    .zr-resume{
+      font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;
+      color:#2A2A2A;
+      background:#ffffff;
+      border:1px solid #e7e3db;
+      border-radius:10px;
+      box-shadow:0 8px 26px rgba(0,0,0,.06);
+      padding:22px 22px 8px;
+    }
+    .zr-resume h3{
+      margin:0 0 12px 0;
+      font-weight:600;
+      letter-spacing:.04em;
+      color:#1A2B44;
+      text-transform:none; /* keep your exact headings text */
+      font-size:1.05rem;
+    }
+    .zr-row{margin:18px 0}
+    .zr-row:first-child{margin-top:6px}
+    .zr-title{font-weight:600;color:#1A2B44;margin-bottom:2px}
+    .zr-sub{color:#60666f;font-weight:500;margin-bottom:6px}
+    .zr-ul{margin:6px 0 0 18px}
+    .zr-ul li{margin:6px 0;line-height:1.55}
+    .zr-skillchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+    .zr-chip{
+      border:1px solid #e7e3db;background:#fff;border-radius:7px;padding:6px 10px;
+      font-size:.86rem;font-weight:600;letter-spacing:.02em;color:#1A2B44;
+    }
+    .zr-headerline{
+      display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;
+      margin-bottom:14px;color:#69707a
+    }
+    .zr-headerline a{color:#1A2B44;text-decoration:none;border-bottom:1px solid transparent}
+    .zr-headerline a:hover{border-bottom-color:#1A2B44}
   </style>
 </head>
 <body>
@@ -184,7 +220,116 @@
     <div class="page-inner">
       <div class="content">
         <h2>Resume</h2>
-        <p>Coming soon.</p>
+
+        <!-- ===== Resume Block (Exact Wording Preserved) ===== -->
+        <div class="zr-resume" aria-label="Resume">
+          <div class="zr-headerline">
+            <strong>Francisco Zenarolla</strong> · Virginia Beach, VA 23455 ·
+            <a href="mailto:Francisco@zenarolla.com">Francisco@zenarolla.com</a>
+          </div>
+
+          <div class="zr-row">
+            <h3>Professional Summary</h3>
+            <p>Analytical and detail-oriented Finance &amp; Operations professional with a strong foundation in financial management, data analysis, and multi-unit operations. Proven ability to gather and interpret performance metrics, streamline processes, and deliver actionable business insights. Currently completing a B.S. in Financial Management with hands-on experience in campaign operations, vendor coordination, and customer service. Preparing to apply advanced analytical, financial, and operational skills to a Finance/Operations Analyst role in the retail or convenience store industry.</p>
+          </div>
+
+          <div class="zr-row">
+            <h3>Education</h3>
+
+            <div class="zr-title">Old Dominion University – Norfolk, VA</div>
+            <div class="zr-sub"> Bachelor’s Degree, Financial Management (Expected Summer 2025)</div>
+            <ul class="zr-ul">
+              <li>Dean’s List recipient.</li>
+            </ul>
+
+            <p></p>
+            <div>Relevant Coursework: Financial Analysis, Managerial Accounting, Operations Management, Business Analytics.</div>
+
+            <p></p>
+            <div class="zr-title">Tidewater Community College – Virginia Beach, VA</div>
+            <div class="zr-sub"> Associate’s Degree, Business Administration (May 2023)</div>
+            <div>Completed through Kempsville High School’s dual enrollment program.</div>
+
+            <p></p>
+            <div>Coursework in accounting, finance, business law, marketing, and management.</div>
+
+            <p></p>
+            <div>Developed advanced Excel and data analysis skills for budgeting, forecasting, and reporting.</div>
+
+            <p></p>
+            <div>Participated in team-based projects requiring leadership, presentation, and project planning.</div>
+
+            <p></p>
+            <div class="zr-title">Kempsville High School – Virginia Beach, VA</div>
+            <div class="zr-sub"> Advanced Studies Diploma – Entrepreneurship and Business Academy (EBA) (June 2023)</div>
+            <div>Completed a rigorous business-focused curriculum emphasizing entrepreneurship, finance, and management.</div>
+
+            <p></p>
+            <div>Earned an Associate’s Degree in Business Administration concurrently through dual enrollment with TCC.</div>
+
+            <p></p>
+            <div>Completed a 100-hour business internship with Dominion Solar, gaining hands-on experience in marketing strategy, campaign execution, and data analysis.</div>
+
+            <p></p>
+            <div>Developed public speaking, leadership, and business communication skills through EBA coursework and presentations.</div>
+          </div>
+
+          <div class="zr-row">
+            <h3>Core Skills</h3>
+            <div class="zr-skillchips">
+              <span class="zr-chip">Financial &amp; Operational Analysis</span>
+              <span class="zr-chip">Microsoft Excel (Pivot Tables, Power Query, VLOOKUP, INDEX/MATCH)</span>
+              <span class="zr-chip">Data Visualization (Power BI, Tableau – beginner)</span>
+              <span class="zr-chip">KPI Tracking &amp; Reporting</span>
+              <span class="zr-chip">Market &amp; Competitor Research</span>
+              <span class="zr-chip">Forecasting &amp; Budget Support</span>
+              <span class="zr-chip">Customer Experience Optimization</span>
+              <span class="zr-chip">Project Management</span>
+            </div>
+          </div>
+
+          <div class="zr-row">
+            <h3>Experience</h3>
+
+            <div class="zr-title">Campaign Operations &amp; Data Analyst (Multiple Campaigns – Hampton Roads, VA)</div>
+            <div class="zr-sub"> Tim Anderson for Delegate (2025) | Stacy Cummings for City Council (2024) | Andy Pittman for Delegate (2023)</div>
+            <ul class="zr-ul">
+              <li>Analyzed performance, demographic, and survey response data to identify high-impact target areas, enabling more efficient allocation of staff, time, and resources.</li>
+              <li>Directed large-scale door-to-door and phone-based engagement operations, tracking interaction metrics to guide resource allocation.</li>
+              <li>Negotiated and secured hundreds of high-visibility marketing locations across multiple districts, maximizing campaign reach and brand exposure.</li>
+              <li>Trained and supervised new team members, implementing performance tracking that improved productivity.</li>
+              <li>Developed scripts and guides to standardize communication, reducing inconsistencies in messaging.</li>
+              <li>Compiled and reported interaction metrics, providing leadership with actionable insights for strategic adjustments.</li>
+            </ul>
+
+            <div class="zr-title">Barista/Cashier – Starbucks – Virginia Beach, VA (Jul 2022 – Mar 2023)</div>
+            <ul class="zr-ul">
+              <li>Balanced high-volume customer service with adherence to operational SOPs and quality control standards.</li>
+              <li>Maintained accurate cash handling and point-of-sale reconciliation.</li>
+              <li>Utilized upselling techniques to increase average transaction value.</li>
+            </ul>
+          </div>
+
+          <div class="zr-row">
+            <h3>Certifications</h3>
+            <ul class="zr-ul">
+              <li>Microsoft Excel 2016</li>
+              <li>Microsoft Word 2016</li>
+              <li>Microsoft PowerPoint 2016</li>
+            </ul>
+          </div>
+
+          <div class="zr-row">
+            <h3>Awards</h3>
+            <ul class="zr-ul">
+              <li>Dean’s List – Old Dominion University</li>
+              <li>Excellence in Civics Education – Virginia Board of Education</li>
+              <li>Academic Excellence – Governor of Virginia</li>
+            </ul>
+          </div>
+        </div>
+        <!-- ===== /Resume Block ===== -->
+
         <a class="btn back-btn" href="#/"><span class="arrow">←</span><span class="label">Back to Home</span></a>
       </div>
     </div>
