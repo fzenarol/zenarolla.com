@@ -14,7 +14,8 @@
     html{scroll-behavior:smooth}
 
     :root{
-      --bg1:#f9f7f3; --bg2:#f2f0eb; --ink:#2b2b2b;
+      --bg1:#f9f7f3; --bg2:#f9f7f3; --ink:#2b2b2b;
+      --gold1:#d4af37; --gold2:#ffd700;
       --btn-top:#0a0a0a; --btn-bot:#000000; --btn-border:#000000;
       --btn-hover-top:#161616; --btn-hover-bot:#050505; --btn-hover-border:#1f1f1f;
       --btn-text:#fafafa;
@@ -55,6 +56,18 @@
     .page.active{display:block; opacity:1; transform:translateY(0); z-index:1;}
     .page.leaving{display:block; opacity:0; transform:translateY(8px); z-index:0;}
 
+    /* Mobile resume visibility fix */
+    .page { -webkit-overflow-scrolling: touch; }
+    @media (max-width: 768px){
+      .page{ position: absolute; inset: 0; }
+      .page.active{ z-index: 10; }
+      .page.leaving{ z-index: 0; }
+    }
+    @supports (-webkit-touch-callout: none){
+      .page{ min-height: 100vh; }
+    }
+    .page-inner{ padding-bottom: 140px; }
+
     .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
     .container{width:min(800px,92vw);margin-inline:auto}
 
@@ -91,7 +104,7 @@
 
     .btn::before{
       content:"";position:absolute;inset:-2px;border-radius:0;padding:1.5px;opacity:0;pointer-events:none;
-      background:linear-gradient(90deg,transparent 0%,#d4af37 15%,#ffd700 50%,#d4af37 85%,transparent 100%);
+      background:linear-gradient(90deg,transparent 0%,var(--gold1) 15%,var(--gold2) 50%,var(--gold1) 85%,transparent 100%);
       background-size:260% 100%;
       -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
       -webkit-mask-composite:xor; mask-composite:exclude;
@@ -104,24 +117,11 @@
     }
     .keyline-sweep::before{animation:keylinePass 1600ms cubic-bezier(.22,.61,.36,1) 1 forwards}
 
-    .page-inner{min-height:100%;display:flex;align-items:flex-start;justify-content:center;padding:96px 20px 120px}
+    .page-inner{min-height:100%;display:flex;align-items:flex-start;justify-content:center;padding:140px 20px 120px}
     .content{width:min(900px,92vw); opacity:0; transform:translateY(8px); transition:opacity var(--content-reveal) ease, transform var(--content-reveal) ease;}
     .active .content{opacity:1; transform:translateY(0);}
-    .content h2{margin:0 0 40px 0;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+    .content h2{margin:0 0 16px 0;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
     .content p{line-height:1.6;margin:0 0 16px 0}
-
-    .resume-body p, .resume-body li {
-      margin-bottom: 10px;
-      line-height: 1.6;
-    }
-    .resume-body ul {
-      margin-top: 0;
-      padding-left: 20px;
-    }
-    .resume-body h3 {
-      margin-top: 28px;
-      margin-bottom: 12px;
-    }
 
     .back-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:28px}
     .back-btn .arrow{font-size:1.2rem;line-height:1}
@@ -137,16 +137,11 @@
     }
     @media (max-width:768px){
       .home.page{overflow:hidden;}
-      .home .hero{min-height:100vh;min-height:100svh;}
+      .home .hero{min-height:100dvh;}
       .btn{padding:14px 28px}
       .back-btn .label{display:none}
       .back-btn .arrow{font-size:1.4rem}
       .back-btn{padding:10px 14px}
-    }
-    @supports (min-height: 100dvh){
-      @media (max-width:768px){
-        .home .hero{ min-height:100dvh; }
-      }
     }
     @media (prefers-reduced-motion: reduce){
       html{animation:none}
@@ -177,10 +172,7 @@
     <div class="page-inner">
       <div class="content">
         <h2>Resume</h2>
-        <div class="resume-body">
-          <!-- Resume content from your provided text, with bullet points under Education -->
-          <!-- ... content goes here exactly as you wrote it ... -->
-        </div>
+        <p>[PASTE YOUR FULL RESUME TEXT HERE WITH BULLET POINTS]</p>
         <a class="btn back-btn" href="#/"><span class="arrow">←</span><span class="label">Back to Home</span></a>
       </div>
     </div>
@@ -223,7 +215,9 @@
       if (currentPage){
         currentPage.classList.remove('active');
         currentPage.classList.add('leaving');
-        currentPage.addEventListener('transitionend', () => { currentPage && currentPage.classList.remove('leaving'); }, { once:true });
+        currentPage.addEventListener('transitionend', () => {
+          currentPage && currentPage.classList.remove('leaving');
+        }, { once:true });
       }
       nextPage.classList.add('active');
       currentPage = nextPage;
