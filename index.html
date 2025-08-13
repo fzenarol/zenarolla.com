@@ -106,14 +106,22 @@
     .keyline-sweep::before{animation:keylinePass 1600ms cubic-bezier(.22,.61,.36,1) 1 forwards}
 
     /* ===== Inner pages content reveal ===== */
-    .page-inner{min-height:100%;display:flex;align-items:flex-start;justify-content:center;padding:96px 20px 120px}
-    .content{width:min(860px,92vw); opacity:0; transform:translateY(8px); transition:opacity var(--content-reveal) ease, transform var(--content-reveal) ease;}
+    .page-inner{min-height:100%;display:flex;align-items:flex-start;justify-content:center;padding:84px 20px 108px}
+    .content{
+      width:min(820px,92vw);
+      opacity:0; transform:translateY(8px);
+      transition:opacity var(--content-reveal) ease, transform var(--content-reveal) ease;
+    }
     .active .content{opacity:1; transform:translateY(0);}
-    .content h2{margin:0 0 16px 0;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
-    .content p{line-height:1.6;margin:0 0 16px 0}
+    .content h2{
+      margin:0 0 12px 0;
+      font-weight:500; letter-spacing:.06em; text-transform:uppercase;
+      text-align:center; /* center the Resume heading */
+    }
+    .content p{line-height:1.6;margin:0 0 14px 0}
 
     /* Back to Home (desktop label, mobile arrow-only) */
-    .back-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:28px}
+    .back-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:24px}
     .back-btn .arrow{font-size:1.2rem;line-height:1}
 
     /* Contact email hover */
@@ -125,6 +133,8 @@
       .btn{font-size:1.1rem}
       h1{font-weight:400}
       .back-btn .label{display:inline}
+      /* left-align resume block on desktop for professional look */
+      .zr-headerline{justify-content:flex-start}
     }
     @media (max-width:768px){
       .home.page{overflow:hidden;}
@@ -133,6 +143,8 @@
       .back-btn .label{display:none}
       .back-btn .arrow{font-size:1.4rem}
       .back-btn{padding:10px 14px}
+      /* center resume headerline on mobile */
+      .zr-headerline{justify-content:center}
     }
     @supports (min-height: 100dvh){
       @media (max-width:768px){ .home .hero{ min-height:100dvh; } }
@@ -152,22 +164,22 @@
       border:1px solid var(--ink);
       border-radius:10px;
       box-shadow:0 8px 26px rgba(0,0,0,.06);
-      padding:18px 22px 12px; /* tighter */
+      padding:18px 22px 12px; /* tightened */
     }
     .zr-resume h3{
-      margin:0 0 12px 0;
+      margin:0 0 10px 0;
       font-weight:600;
-      letter-spacing:.04em;
+      letter-spacing:.03em;
       color:var(--ink);
       text-transform:none;
-      font-size:1.05rem;
+      font-size:1.02rem;
     }
     .zr-row{margin:14px 0} /* tighter sections */
     .zr-row:first-child{margin-top:6px}
     .zr-title{font-weight:600;color:var(--ink);margin-bottom:2px}
-    .zr-sub{color:var(--ink);font-weight:500;margin-bottom:2px} /* closer to bullets */
+    .zr-sub{color:var(--ink);font-weight:500;margin-bottom:2px}
     .zr-ul{margin:6px 0 0 18px}
-    .zr-ul li{margin:4px 0;line-height:1.55}
+    .zr-ul li{margin:4px 0;line-height:1.52} /* tighter list items */
     .zr-skillchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
     .zr-chip{
       border:1px solid var(--ink);
@@ -180,7 +192,7 @@
       color:var(--ink);
     }
     .zr-headerline{
-      display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;
+      display:flex;flex-wrap:wrap;gap:10px;align-items:center;
       margin-bottom:10px;color:var(--ink)
     }
     .zr-headerline a{
@@ -220,13 +232,7 @@
       .zr-row { margin:10pt 0 !important; }
       .zr-ul li { margin:3pt 0 !important; line-height:1.4; }
 
-      /* Page size + margins */
-      @page {
-        size: Letter; /* change to A4 if needed */
-        margin: 0.6in 0.6in 0.6in 0.6in;
-      }
-
-      /* Keep logical chunks together */
+      @page { size: Letter; margin: 0.6in; }
       .zr-row, .zr-title, .zr-ul { page-break-inside: avoid; }
       h2, h3 { page-break-after: avoid; }
     }
@@ -254,10 +260,7 @@
       <div class="content">
         <h2>Resume</h2>
 
-        <!-- Download PDF button -->
-        <a class="btn" href="#" onclick="window.print(); return false;" style="margin-bottom:16px; display:inline-block;">Download as PDF</a>
-
-        <!-- ===== Resume Block (Exact Wording Preserved, spacing tightened) ===== -->
+        <!-- ===== Resume Block (Exact Wording Preserved, polished spacing) ===== -->
         <div class="zr-resume" aria-label="Resume">
           <div class="zr-headerline">
             <strong>Francisco Zenarolla</strong> · Virginia Beach, VA 23455 ·
@@ -429,6 +432,7 @@
 
     window.addEventListener('hashchange', () => showRoute(currentRoute()));
     document.addEventListener('DOMContentLoaded', () => {
+      document.body.addEventListener('keydown', e => { if(e.key==='Escape'){ location.hash = '#/'; }});
       document.body.classList.add('loaded');
       if (!routes.includes(currentRoute())) location.hash = '#/';
       showRoute(currentRoute());
