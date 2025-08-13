@@ -39,8 +39,7 @@
       font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;
       color:var(--ink);
       min-height:100vh;
-      /* body can be transparent; html provides the gradient */
-      background:transparent;
+      background:transparent; /* html handles gradient */
     }
 
     /* Global, safe scroll lock (used on home for mobile) */
@@ -133,28 +132,16 @@
       .back-btn .label{display:inline}
     }
     @media (max-width:768px){
-      /* Keep home from scrolling; page itself also has overflow hidden */
       .home.page{overflow:hidden;}
-
-      .home .hero{
-        min-height:100vh;   /* fallback */
-        min-height:100svh;  /* iOS small viewport */
-      }
-
+      .home .hero{ min-height:100vh; min-height:100svh; }
       .btn{padding:14px 28px}
       .back-btn .label{display:none}
       .back-btn .arrow{font-size:1.4rem}
       .back-btn{padding:10px 14px}
     }
-
-    /* Prefer the dynamic viewport on modern browsers */
     @supports (min-height: 100dvh){
-      @media (max-width:768px){
-        .home .hero{ min-height:100dvh; }
-      }
+      @media (max-width:768px){ .home .hero{ min-height:100dvh; } }
     }
-
-    /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
       html{animation:none}
       .page,.content{transition:none;opacity:1;transform:none}
@@ -162,12 +149,12 @@
       .btn,.btn::before{transition:none}
     }
 
-    /* ===== Resume block styles (scoped) ===== */
+    /* ===== Resume block styles (scoped, no blue/gray) ===== */
     .zr-resume{
       font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;
-      color:#2A2A2A;
+      color:var(--ink);
       background:#ffffff;
-      border:1px solid #e7e3db;
+      border:1px solid var(--ink);
       border-radius:10px;
       box-shadow:0 8px 26px rgba(0,0,0,.06);
       padding:22px 22px 8px;
@@ -176,27 +163,37 @@
       margin:0 0 12px 0;
       font-weight:600;
       letter-spacing:.04em;
-      color:#1A2B44;
-      text-transform:none; /* keep your exact headings text */
+      color:var(--ink);
+      text-transform:none;
       font-size:1.05rem;
     }
     .zr-row{margin:18px 0}
     .zr-row:first-child{margin-top:6px}
-    .zr-title{font-weight:600;color:#1A2B44;margin-bottom:2px}
-    .zr-sub{color:#60666f;font-weight:500;margin-bottom:6px}
+    .zr-title{font-weight:600;color:var(--ink);margin-bottom:2px}
+    .zr-sub{color:var(--ink);font-weight:500;margin-bottom:6px}
     .zr-ul{margin:6px 0 0 18px}
     .zr-ul li{margin:6px 0;line-height:1.55}
     .zr-skillchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
     .zr-chip{
-      border:1px solid #e7e3db;background:#fff;border-radius:7px;padding:6px 10px;
-      font-size:.86rem;font-weight:600;letter-spacing:.02em;color:#1A2B44;
+      border:1px solid var(--ink);
+      background:#fff;
+      border-radius:7px;
+      padding:6px 10px;
+      font-size:.86rem;
+      font-weight:600;
+      letter-spacing:.02em;
+      color:var(--ink);
     }
     .zr-headerline{
       display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;
-      margin-bottom:14px;color:#69707a
+      margin-bottom:14px;color:var(--ink)
     }
-    .zr-headerline a{color:#1A2B44;text-decoration:none;border-bottom:1px solid transparent}
-    .zr-headerline a:hover{border-bottom-color:#1A2B44}
+    .zr-headerline a{
+      color:var(--ink);
+      text-decoration:none;
+      border-bottom:1px solid transparent
+    }
+    .zr-headerline a:hover{border-bottom-color:var(--ink)}
   </style>
 </head>
 <body>
@@ -236,42 +233,30 @@
           <div class="zr-row">
             <h3>Education</h3>
 
-            <div class="zr-title">Old Dominion University – Norfolk, VA</div>
-            <div class="zr-sub"> Bachelor’s Degree, Financial Management (Expected Summer 2025)</div>
+            <p class="zr-title">Old Dominion University – Norfolk, VA</p>
+            <p class="zr-sub">Bachelor’s Degree, Financial Management (Expected Summer 2025)</p>
             <ul class="zr-ul">
               <li>Dean’s List recipient.</li>
+              <li>Relevant Coursework: Financial Analysis, Managerial Accounting, Operations Management, Business Analytics.</li>
             </ul>
 
-            <p></p>
-            <div>Relevant Coursework: Financial Analysis, Managerial Accounting, Operations Management, Business Analytics.</div>
+            <p class="zr-title">Tidewater Community College – Virginia Beach, VA</p>
+            <p class="zr-sub">Associate’s Degree, Business Administration (May 2023)</p>
+            <ul class="zr-ul">
+              <li>Completed through Kempsville High School’s dual enrollment program.</li>
+              <li>Coursework in accounting, finance, business law, marketing, and management.</li>
+              <li>Developed advanced Excel and data analysis skills for budgeting, forecasting, and reporting.</li>
+              <li>Participated in team-based projects requiring leadership, presentation, and project planning.</li>
+            </ul>
 
-            <p></p>
-            <div class="zr-title">Tidewater Community College – Virginia Beach, VA</div>
-            <div class="zr-sub"> Associate’s Degree, Business Administration (May 2023)</div>
-            <div>Completed through Kempsville High School’s dual enrollment program.</div>
-
-            <p></p>
-            <div>Coursework in accounting, finance, business law, marketing, and management.</div>
-
-            <p></p>
-            <div>Developed advanced Excel and data analysis skills for budgeting, forecasting, and reporting.</div>
-
-            <p></p>
-            <div>Participated in team-based projects requiring leadership, presentation, and project planning.</div>
-
-            <p></p>
-            <div class="zr-title">Kempsville High School – Virginia Beach, VA</div>
-            <div class="zr-sub"> Advanced Studies Diploma – Entrepreneurship and Business Academy (EBA) (June 2023)</div>
-            <div>Completed a rigorous business-focused curriculum emphasizing entrepreneurship, finance, and management.</div>
-
-            <p></p>
-            <div>Earned an Associate’s Degree in Business Administration concurrently through dual enrollment with TCC.</div>
-
-            <p></p>
-            <div>Completed a 100-hour business internship with Dominion Solar, gaining hands-on experience in marketing strategy, campaign execution, and data analysis.</div>
-
-            <p></p>
-            <div>Developed public speaking, leadership, and business communication skills through EBA coursework and presentations.</div>
+            <p class="zr-title">Kempsville High School – Virginia Beach, VA</p>
+            <p class="zr-sub">Advanced Studies Diploma – Entrepreneurship and Business Academy (EBA) (June 2023)</p>
+            <ul class="zr-ul">
+              <li>Completed a rigorous business-focused curriculum emphasizing entrepreneurship, finance, and management.</li>
+              <li>Earned an Associate’s Degree in Business Administration concurrently through dual enrollment with TCC.</li>
+              <li>Completed a 100-hour business internship with Dominion Solar, gaining hands-on experience in marketing strategy, campaign execution, and data analysis.</li>
+              <li>Developed public speaking, leadership, and business communication skills through EBA coursework and presentations.</li>
+            </ul>
           </div>
 
           <div class="zr-row">
@@ -292,7 +277,7 @@
             <h3>Experience</h3>
 
             <div class="zr-title">Campaign Operations &amp; Data Analyst (Multiple Campaigns – Hampton Roads, VA)</div>
-            <div class="zr-sub"> Tim Anderson for Delegate (2025) | Stacy Cummings for City Council (2024) | Andy Pittman for Delegate (2023)</div>
+            <div class="zr-sub">Tim Anderson for Delegate (2025) | Stacy Cummings for City Council (2024) | Andy Pittman for Delegate (2023)</div>
             <ul class="zr-ul">
               <li>Analyzed performance, demographic, and survey response data to identify high-impact target areas, enabling more efficient allocation of staff, time, and resources.</li>
               <li>Directed large-scale door-to-door and phone-based engagement operations, tracking interaction metrics to guide resource allocation.</li>
