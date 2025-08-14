@@ -240,6 +240,20 @@
       .zr-row, .zr-title, .zr-ul { page-break-inside: avoid; }
       h2, h3 { page-break-after: avoid; }
     }
+    /* ==== FORCE SPACING FIXES (Education section & bullets) ==== */
+.zr-resume .zr-row          { margin: 20px 0 !important; }      /* space between sections */
+.zr-resume .zr-title        { margin: 16px 0 6px !important; }  /* school name spacing */
+.zr-resume .zr-sub          { margin: 0 0 10px !important; }    /* degree line -> bullets */
+
+.zr-resume .zr-ul           { margin: 10px 0 0 22px !important; } /* bullets not jammed */
+.zr-resume .zr-ul li        { margin: 7px 0 !important; line-height: 1.6 !important; }
+
+.zr-resume p                { line-height: 1.6 !important; }    /* body text readability */
+
+/* optional: a little extra gap between each school entry only */
+.zr-resume h3 + .zr-title   { margin-top: 10px !important; }    /* first school after "Education" */
+.zr-resume .zr-title + .zr-sub + .zr-ul + .zr-title { margin-top: 18px !important; }
+
   </style>
 </head>
 <body>
