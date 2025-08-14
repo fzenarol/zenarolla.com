@@ -191,28 +191,6 @@
       letter-spacing:.02em;
       color:var(--ink);
     }
-    <!-- Inside your <style> block, add this after your .zr-chip styles -->
-.zr-skills{display:flex;flex-direction:column;gap:12px}
-.zr-skillgroup{
-  display:grid;
-  grid-template-columns:auto 1fr;
-  align-items:start;
-  column-gap:10px; row-gap:8px;
-}
-.zr-skilllabel{
-  align-self:start;
-  border:1px solid var(--ink);
-  background:#fff; color:var(--ink);
-  padding:6px 10px; border-radius:999px;
-  font-size:.82rem; font-weight:700; letter-spacing:.03em;
-  text-transform:uppercase;
-}
-.zr-skillchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:0}
-@media (max-width:640px){
-  .zr-skillgroup{grid-template-columns:1fr}
-  .zr-skilllabel{width:max-content}
-}
-
     .zr-headerline{
       display:flex;flex-wrap:wrap;gap:10px;align-items:center;
       margin-bottom:10px;color:var(--ink)
@@ -323,44 +301,19 @@
             </ul>
           </div>
 
-          <<!-- Replace your current Core Skills block with this -->
-<div class="zr-row">
-  <h3>Core Skills</h3>
-
-  <div class="zr-skills">
-    <!-- Technical -->
-    <div class="zr-skillgroup" aria-label="Technical skills">
-      <span class="zr-skilllabel">Technical</span>
-      <div class="zr-skillchips">
-        <span class="zr-chip">Microsoft Excel (Pivot Tables, Power Query, VLOOKUP, INDEX/MATCH)</span>
-        <span class="zr-chip">Power BI</span>
-        <span class="zr-chip">Tableau (beginner)</span>
-      </div>
-    </div>
-
-    <!-- Analytical -->
-    <div class="zr-skillgroup" aria-label="Analytical skills">
-      <span class="zr-skilllabel">Analytical</span>
-      <div class="zr-skillchips">
-        <span class="zr-chip">KPI Tracking &amp; Reporting</span>
-        <span class="zr-chip">Market &amp; Competitor Research</span>
-        <span class="zr-chip">Forecasting &amp; Budget Support</span>
-      </div>
-    </div>
-
-    <!-- Operations & Management -->
-    <div class="zr-skillgroup" aria-label="Operations and management skills">
-      <span class="zr-skilllabel">Operations &amp; Management</span>
-      <div class="zr-skillchips">
-        <span class="zr-chip">Multi-Unit Coordination</span>
-        <span class="zr-chip">Vendor Negotiation</span>
-        <span class="zr-chip">Project Management</span>
-        <span class="zr-chip">Customer Experience Optimization</span>
-      </div>
-    </div>
-  </div>
-</div>
-
+          <div class="zr-row">
+            <h3>Core Skills</h3>
+            <div class="zr-skillchips">
+              <span class="zr-chip">Financial &amp; Operational Analysis</span>
+              <span class="zr-chip">Microsoft Excel (Pivot Tables, Power Query, VLOOKUP, INDEX/MATCH)</span>
+              <span class="zr-chip">Data Visualization (Power BI, Tableau – beginner)</span>
+              <span class="zr-chip">KPI Tracking &amp; Reporting</span>
+              <span class="zr-chip">Market &amp; Competitor Research</span>
+              <span class="zr-chip">Forecasting &amp; Budget Support</span>
+              <span class="zr-chip">Customer Experience Optimization</span>
+              <span class="zr-chip">Project Management</span>
+            </div>
+          </div>
 
           <div class="zr-row">
             <h3>Experience</h3>
