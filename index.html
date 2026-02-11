@@ -23,7 +23,6 @@
       --content-reveal:260ms;
     }
 
-    /* Animated gradient on <html> to avoid iOS white flash */
     html{
       background:linear-gradient(120deg,var(--bg1),var(--bg2),var(--bg1));
       background-size:400% 400%;
@@ -39,12 +38,11 @@
       font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;
       color:var(--ink);
       min-height:100vh;
-      background:transparent; /* html provides gradient */
+      background:transparent;
     }
 
     html.no-scroll, body.no-scroll{ overflow:hidden; overscroll-behavior:none; }
 
-    /* ===== SPA pages with cross-fade ===== */
     .page{
       position:fixed; inset:0; overflow:auto;
       display:none; opacity:0; transform:translateY(8px);
@@ -54,7 +52,6 @@
     .page.active{display:block; opacity:1; transform:translateY(0); z-index:1;}
     .page.leaving{display:block; opacity:0; transform:translateY(8px); z-index:0;}
 
-    /* ===== Home (hero) ===== */
     .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
     .container{width:min(800px,92vw);margin-inline:auto}
 
@@ -89,7 +86,6 @@
     }
     .btn:active{transform:scale(.99)}
 
-    /* Gold keyline sweep (home buttons only) — 1600ms */
     .btn::before{
       content:"";position:absolute;inset:-2px;border-radius:0;padding:1.5px;opacity:0;pointer-events:none;
       background:linear-gradient(90deg,transparent 0%,var(--gold1) 15%,var(--gold2) 50%,var(--gold1) 85%,transparent 100%);
@@ -105,7 +101,6 @@
     }
     .keyline-sweep::before{animation:keylinePass 1600ms cubic-bezier(.22,.61,.36,1) 1 forwards}
 
-    /* ===== Inner pages content reveal ===== */
     .page-inner{min-height:100%;display:flex;align-items:flex-start;justify-content:center;padding:84px 20px 108px}
     .content{
       width:min(820px,92vw);
@@ -116,15 +111,13 @@
     .content h2{
       margin:0 0 12px 0;
       font-weight:500; letter-spacing:.06em; text-transform:uppercase;
-      text-align:center; /* center the Resume heading */
+      text-align:center;
     }
     .content p{line-height:1.6;margin:0 0 14px 0}
 
-    /* Back to Home (desktop label, mobile arrow-only) */
     .back-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:24px}
     .back-btn .arrow{font-size:1.2rem;line-height:1}
 
-    /* Contact email hover */
     .email-link{color:#111;text-decoration:none;position:relative;padding-bottom:2px;background-image:linear-gradient(currentColor,currentColor);background-size:0% 1px;background-repeat:no-repeat;background-position:0 100%;transition:background-size 180ms ease}
     .email-link:hover{background-size:100% 1px}
 
@@ -133,7 +126,6 @@
       .btn{font-size:1.1rem}
       h1{font-weight:400}
       .back-btn .label{display:inline}
-      /* left-align resume block on desktop for professional look */
       .zr-headerline{justify-content:flex-start}
     }
     @media (max-width:768px){
@@ -143,7 +135,6 @@
       .back-btn .label{display:none}
       .back-btn .arrow{font-size:1.4rem}
       .back-btn{padding:10px 14px}
-      /* center resume headerline on mobile */
       .zr-headerline{justify-content:center}
     }
     @supports (min-height: 100dvh){
@@ -164,7 +155,7 @@
       border:1px solid var(--ink);
       border-radius:10px;
       box-shadow:0 8px 26px rgba(0,0,0,.06);
-      padding:18px 22px 12px; /* tightened */
+      padding:18px 22px 12px;
     }
     .zr-resume h3{
       margin:0 0 10px 0;
@@ -174,16 +165,12 @@
       text-transform:none;
       font-size:1.02rem;
     }
-    .zr-row{margin:20px 0} /* tighter sections */
+    .zr-row{margin:20px 0}
     .zr-row:first-child{margin-top:6px}
     .zr-title{font-weight:600;color:var(--ink);margin-bottom:2px}
-    .zr-sub{color:var(--ink);font-weight:500;margin-bottom:2px}
-    .zr-sub {margin-bottom: 8px; /* Adds gap after degree info */}
-    .zr-ul{margin:6px 0 0 18px}
-    .zr-ul {margin-top: 8px; /* Gap before bullets */}
-    .zr-ul li{margin:4px 0;line-height:1.52} /* tighter list items */
-    .zr-ul li {margin-bottom: 6px; /* Space between each bullet */
-               line-height: 1.5; /* Improves readability */}
+    .zr-sub{color:var(--ink);font-weight:500;margin-bottom:8px}
+    .zr-ul{margin:10px 0 0 22px}
+    .zr-ul li{margin:7px 0;line-height:1.6}
     .zr-skillchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
     .zr-chip{
       border:1px solid var(--ink);
@@ -206,18 +193,15 @@
     }
     .zr-headerline a:hover{border-bottom-color:var(--ink)}
 
-    /* ===== Print / PDF ===== */
     @media print {
       html, body { background:#fff !important; }
       * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
-      /* Hide non-resume UI */
       .home, .back-btn, .buttons { display:none !important; }
       .page { position:static; inset:auto; display:block; opacity:1 !important; transform:none !important; }
       .page-inner { padding:0 !important; }
       .content { width:100% !important; margin:0 auto !important; }
 
-      /* Resume formatting */
       .zr-resume {
         border:none !important;
         box-shadow:none !important;
@@ -240,20 +224,6 @@
       .zr-row, .zr-title, .zr-ul { page-break-inside: avoid; }
       h2, h3 { page-break-after: avoid; }
     }
-    /* ==== FORCE SPACING FIXES (Education section & bullets) ==== */
-.zr-resume .zr-row          { margin: 20px 0 !important; }      /* space between sections */
-.zr-resume .zr-title        { margin: 16px 0 6px !important; }  /* school name spacing */
-.zr-resume .zr-sub          { margin: 0 0 10px !important; }    /* degree line -> bullets */
-
-.zr-resume .zr-ul           { margin: 10px 0 0 22px !important; } /* bullets not jammed */
-.zr-resume .zr-ul li        { margin: 7px 0 !important; line-height: 1.6 !important; }
-
-.zr-resume p                { line-height: 1.6 !important; }    /* body text readability */
-
-/* optional: a little extra gap between each school entry only */
-.zr-resume h3 + .zr-title   { margin-top: 10px !important; }    /* first school after "Education" */
-.zr-resume .zr-title + .zr-sub + .zr-ul + .zr-title { margin-top: 18px !important; }
-
   </style>
 </head>
 <body>
@@ -278,100 +248,61 @@
       <div class="content">
         <h2>Resume</h2>
 
-        <!-- ===== Resume Block (Exact Wording Preserved, polished spacing) ===== -->
+        <!-- ===== Resume Block (Updated to match latest resume) ===== -->
         <div class="zr-resume" aria-label="Resume">
           <div class="zr-headerline">
-            <strong>Francisco Zenarolla</strong> · Virginia Beach, VA 23455 ·
-            <a href="mailto:Francisco@zenarolla.com">Francisco@zenarolla.com</a>
-          </div>
-
-          <div class="zr-row">
-            <h3>Professional Summary</h3>
-            <p>Analytical and detail-oriented Finance &amp; Operations professional with a strong foundation in financial management, data analysis, and multi-unit operations. Proven ability to gather and interpret performance metrics, streamline processes, and deliver actionable business insights. Currently completing a B.S. in Financial Management with hands-on experience in campaign operations, vendor coordination, and customer service. Preparing to apply advanced analytical, financial, and operational skills to a Finance/Operations Analyst role in the retail or convenience store industry.</p>
+            <strong>Francisco Zenarolla</strong> · Virginia Beach, VA · 757-968-9626 ·
+            <a href="mailto:francisco@zenarolla.com">francisco@zenarolla.com</a> ·
+            <a href="https://zenarolla.com" target="_blank" rel="noopener">zenarolla.com</a>
           </div>
 
           <div class="zr-row">
             <h3>Education</h3>
 
-            <p class="zr-title">Old Dominion University – Norfolk, VA</p>
-            <p class="zr-sub">Bachelor’s Degree, Financial Management (Expected Summer 2025)</p>
+            <p class="zr-title">Old Dominion University (ODU), Norfolk, VA</p>
+            <p class="zr-sub">Bachelor of Science in Financial Management, Minor in Accounting</p>
             <ul class="zr-ul">
-              <li>Dean’s List recipient.</li>
-              <li>Relevant Coursework: Financial Analysis, Managerial Accounting, Operations Management, Business Analytics.</li>
-              <li>Presented market analysis on Virginia retail growth trends as part of Business Analytics coursework.</li>
+              <li>Expected Dec 2026 | GPA: 3.35 | Dean’s List</li>
+              <li>Relevant Coursework: Financial Management; Financial &amp; Managerial Accounting; Business Analytics I &amp; II; Operations Management; Managerial Economics</li>
             </ul>
 
-            <p class="zr-title">Tidewater Community College – Virginia Beach, VA</p>
-            <p class="zr-sub">Associate’s Degree, Business Administration (May 2023)</p>
+            <p class="zr-title">Tidewater Community College (TCC), Virginia Beach, VA</p>
+            <p class="zr-sub">Associate of Science in Business Administration</p>
             <ul class="zr-ul">
-              <li>Completed through Kempsville High School’s dual enrollment program.</li>
-              <li>Coursework in accounting, finance, business law, marketing, and management.</li>
-              <li>Developed advanced Excel and data analysis skills for budgeting, forecasting, and reporting.</li>
-              <li>Participated in team-based projects requiring leadership, presentation, and project planning.</li>
-            </ul>
-
-            <p class="zr-title">Kempsville High School – Virginia Beach, VA</p>
-            <p class="zr-sub">Advanced Studies Diploma – Entrepreneurship and Business Academy (EBA) (June 2023)</p>
-            <ul class="zr-ul">
-              <li>Completed a rigorous business-focused curriculum emphasizing entrepreneurship, finance, and management.</li>
-              <li>Completed a 100-hour business internship with Dominion Solar, gaining hands-on experience in marketing strategy, campaign execution, and data analysis.</li>
-              <li>Developed public speaking, leadership, and business communication skills through EBA coursework and presentations.</li>
+              <li>May 2023 | GPA: 3.57 | Magna Cum Laude</li>
             </ul>
           </div>
 
           <div class="zr-row">
-            <h3>Core Skills</h3>
+            <h3>Related Experience</h3>
+
+            <p class="zr-title">Independent Contractor – Campaign Operations &amp; Data Analytics</p>
+            <p class="zr-sub">Virginia Beach, VA | Jan 2023 – Nov 2025</p>
+            <ul class="zr-ul">
+              <li>Directed large-scale field and phone-based operations, analyzing engagement data to guide resource allocation and campaign strategy.</li>
+              <li>Partnered directly with candidates and campaign leadership to align outreach strategy with voter engagement objectives.</li>
+              <li>Collected and verified 500+ petition signatures, ensuring regulatory compliance and accuracy to meet ballot requirements.</li>
+              <li>Trained and supervised 12+ team members, improving outreach efficiency across operations.</li>
+            </ul>
+
+            <p class="zr-title">Starbucks – Cashier</p>
+            <p class="zr-sub">Virginia Beach, VA | Jul 2022 – March 2023</p>
+            <ul class="zr-ul">
+              <li>Managed high-volume cash transactions with 100% register accuracy.</li>
+              <li>Maintained operational efficiency during peak periods serving 200+ customers per shift.</li>
+              <li>Improved average transaction value through upselling.</li>
+            </ul>
+          </div>
+
+          <div class="zr-row">
+            <h3>Technical Skills</h3>
             <div class="zr-skillchips">
-              <span class="zr-chip">Financial &amp; Operational Analysis</span>
-              <span class="zr-chip">Microsoft Excel (Pivot Tables, Power Query, VLOOKUP, INDEX/MATCH)</span>
-              <span class="zr-chip">Data Visualization (Power BI, Tableau – beginner)</span>
-              <span class="zr-chip">KPI Tracking &amp; Reporting</span>
-              <span class="zr-chip">Market &amp; Competitor Research</span>
-              <span class="zr-chip">Forecasting &amp; Budget Support</span>
-              <span class="zr-chip">Customer Experience Optimization</span>
-              <span class="zr-chip">Project Management</span>
+              <span class="zr-chip">Microsoft Excel (Pivot Tables, XLOOKUP, SUMIFS, Data Cleaning, Basic Modeling)</span>
+              <span class="zr-chip">Data Analysis</span>
+              <span class="zr-chip">Financial Statement Analysis</span>
+              <span class="zr-chip">KPI Reporting</span>
+              <span class="zr-chip">Microsoft Office Suite (Certified)</span>
             </div>
-          </div>
-
-          <div class="zr-row">
-            <h3>Experience</h3>
-            <div class="zr-title">Independent Contractor - Campaign Operations &amp; Data Analyst (Multiple Campaigns – Hampton Roads, VA)</div>
-            <ul class="zr-ul">
-              <li>Analyzed performance, demographic, and survey response data to identify high-impact target areas, enabling more efficient allocation of staff, time, and resources.</li>
-              <li>Directed large-scale door-to-door and phone-based engagement operations, tracking interaction metrics to guide resource allocation.</li>
-              <li>Negotiated and secured hundreds of high-visibility marketing locations across multiple districts, maximizing campaign reach and brand exposure.</li>
-              <li>Collected and verified hundreds of petition signatures to meet ballot access requirements and support campaign initiatives.</li>
-              <li>Trained and supervised new team members, implementing performance tracking that improved productivity.</li>
-              <!-- Removed per your request:
-                   Developed scripts and guides to standardize communication, reducing inconsistencies in messaging. -->
-              <li>Compiled and reported interaction metrics, providing leadership with actionable insights for strategic adjustments.</li>
-            </ul>
-
-            <div class="zr-title">Barista/Cashier – Starbucks – Virginia Beach, VA (Jul 2022 – Mar 2023)</div>
-            <ul class="zr-ul">
-              <li>Balanced high-volume customer service with adherence to operational SOPs and quality control standards.</li>
-              <li>Maintained accurate cash handling and point-of-sale reconciliation.</li>
-              <li>Utilized upselling techniques to increase average transaction value.</li>
-            </ul>
-          </div>
-
-          <div class="zr-row">
-            <h3>Certifications</h3>
-            <ul class="zr-ul">
-              <li>Microsoft Excel 2016</li>
-              <li>Microsoft Word 2016</li>
-              <li>Microsoft PowerPoint 2016</li>
-              <li>NACS Certified Category Manager (CCM)</li>
-            </ul>
-          </div>
-
-          <div class="zr-row">
-            <h3>Awards</h3>
-            <ul class="zr-ul">
-              <li>Dean’s List – Old Dominion University</li>
-              <li>Excellence in Civics Education – Virginia Board of Education</li>
-              <li>Academic Excellence – Governor of Virginia</li>
-            </ul>
           </div>
         </div>
         <!-- ===== /Resume Block ===== -->
@@ -398,6 +329,8 @@
       <div class="content">
         <h2>Contact</h2>
         <p>Email: <a class="email-link" href="mailto:francisco@zenarolla.com">francisco@zenarolla.com</a></p>
+        <p>Phone: <a class="email-link" href="tel:+17579689626">757-968-9626</a></p>
+        <p>Website: <a class="email-link" href="https://zenarolla.com" target="_blank" rel="noopener">zenarolla.com</a></p>
         <a class="btn back-btn" href="#/"><span class="arrow">←</span><span class="label">Back to Home</span></a>
       </div>
     </div>
